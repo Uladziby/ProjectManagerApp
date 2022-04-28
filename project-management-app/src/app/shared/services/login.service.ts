@@ -7,7 +7,7 @@ import {
 import { Observable, of, pipe, Subject, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { BASIC_URL } from './url';
-import { IUser, IUserInfo, IUserSignIn } from '../interfases/api.model';
+import { IUser, IUserInfo, IUserSignIn } from '../interfaces/interfaces';
 
 @Injectable()
 export class AuthService {
