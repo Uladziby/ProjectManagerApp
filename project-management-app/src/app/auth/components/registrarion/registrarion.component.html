@@ -1,0 +1,50 @@
+<form class="registration" [formGroup]="form" (ngSubmit)="regUser()">
+  <h2 class="title">
+    Registration
+  </h2>
+
+  <div class="form-control">
+    <label>Your login:</label>
+    <input type="text" formControlName="login">
+    <div class="valid" *ngIf="form.get('login')?.touched && form.get('login')?.invalid">
+      Поле не может быть пустым
+    </div>
+  </div>
+
+  <div class=" form-control">
+    <label> Your name:</label>
+    <input type="text" formControlName="name">
+    <div class="valid" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Поле не может быть пустым.
+    </div>
+  </div>
+
+  <div class="form-control">
+    <label>Your password:</label>
+    <input type="password" formControlName="password">
+    <div class="valid" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+      <span *ngIf="form.get('password')?.errors?.['required']">Поле не может быть пустым.</span>
+      <span>Минимальныя длина пароля {{form.get('password')?.errors?.['minlength']?.['requiredLength']}} символа.</span>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <label>Confirm password:</label>
+    <input type="password" formControlName="passwordConfirm">
+    <div class="valid" *ngIf="form.get('passwordConfirm')?.touched && form.get('passwordConfirm')?.invalid">
+      <span *ngIf="form.get('passwordConfirm')?.errors?.['required']">Поле не может быть пустым.</span>
+
+      <span>Пароли не совпадают</span>
+
+
+    </div>
+  </div>
+  <div *ngIf=" form.invalid" class="alert">Для регистрации необходимо заполнить поля:
+    <span *ngIf=" form.get('login')?.invalid"> Login, </span>
+    <span *ngIf=" form.get('name')?.invalid"> Name, </span>
+    <span *ngIf=" form.get('password')?.invalid"> Password, </span>
+    <span *ngIf=" form.get('passwordConfirm')?.invalid"> Confirm password </span>
+  </div>
+
+  <button type="submit" class="btn" [disabled]="form.invalid">Submit</button>
+</form>
