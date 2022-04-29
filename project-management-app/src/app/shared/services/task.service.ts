@@ -3,14 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BASIC_URL } from './url';
-import {
-  IColumn,
-  IColumnCreation,
-  IColumns,
-  ITask,
-  ITaskCreate,
-  ITaskNewInfo,
-} from '../interfaces/interfaces';
+import { ITask, ITaskCreate, ITaskNewInfo } from '../interfaces/interfaces';
 
 @Injectable()
 export class TaskService {
