@@ -8,14 +8,25 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 export class HeaderComponent implements OnInit{
   public slideToggle : boolean = false;
   public lang: string ="English";
-
-  constructor() { }
+  public panelOpenState = false;
+  public isLogin:boolean = false;
+  constructor() { 
+    localStorage.setItem('user', 'yes')
+  }
   ngOnInit(): void {
+    this.onCheckLogin();
+    
   }
- 
-
+  
+  onCheckLogin(){
+    const user = localStorage.getItem('user');
+    user? this.isLogin = true: this.isLogin = false;
+  }
   OnChangeLang(): void {
-    this.slideToggle===true? this.lang='Russia':this.lang='English';
+    this.slideToggle===true? this.lang='Русский':this.lang='English';
   }
-
+  OnLogout():void{
+    localStorage.clear()
+    this.onCheckLogin();
+  }
 }

@@ -1,5 +1,40 @@
-<p>header works!</p>
 <header>
-<mat-slide-toggle [(ngModel)]="slideToggle"(change)="OnChangeLang()">{{this.lang}} </mat-slide-toggle>
+  <mat-toolbar color="accent">
+    <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
+      {{ this.lang }}
+    </mat-slide-toggle>
+    <button mat-button color="primary"  [disabled]="!this.isLogin">
+      <mat-icon> add </mat-icon>
+      Create new board
+    </button>
+    <mat-accordion  *ngIf="this.isLogin">
+      <mat-expansion-panel
+        role="button"
+        color="accent"
+        class="user_menu"
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title color="primary">
+            <button mat-mini-fab color="primary">
+              <mat-icon> person </mat-icon>
+            </button>
+            Hello, User
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
+        <button class="btn_menu" mat-flat-button>Edit profile</button>
+        <button class="btn_menu" mat-flat-button (click)="OnLogout()">Logout</button>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <mat-card *ngIf="this.isLogin">
+      <button mat-button color="primary" >
+        Login
+      </button>
+      <button mat-button color="primary">
+        SignUp
+      </button>
+    </mat-card>
+  </mat-toolbar>
 </header>

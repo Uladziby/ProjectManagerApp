@@ -8,8 +8,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
-
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { FooterComponent } from './components/footer/footer.component';
 const materialModules = [
   MatToolbarModule,
   MatButtonModule,
@@ -17,14 +18,17 @@ const materialModules = [
   MatFormFieldModule,
   MatInputModule,
   MatSlideToggleModule,
+  MatIconModule,
+  MatExpansionModule,
 ];
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   exports:[
-    HeaderComponent
+    HeaderComponent,FooterComponent
   ],
   imports: [
     CommonModule,
