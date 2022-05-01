@@ -1,14 +1,30 @@
-<div class="login">
+<form class="registration" [formGroup]="form" (ngSubmit)="regUser()">
   <h2 class="title">
-    Login
+    Вход
   </h2>
-  <div class="login__block">
-    Your login:
-    <input type="text" name="userLogin">
+
+  <div class="form-control">
+    <label>Логин:</label>
+    <input type="text" formControlName="login">
+    <div class="valid" *ngIf="form.get('login')?.touched && form.get('login')?.invalid">
+      Поле не может быть пустым
+    </div>
   </div>
-  <div class="pass__block">
-    Your password:
-    <input type="password" name="userPass">
+
+  <div class="form-control">
+    <label>Пароль:</label>
+    <input type="password" formControlName="password">
+    <div class="valid" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+      <span *ngIf="form.get('password')?.errors?.['required']">Поле не может быть пустым.</span>
+      <span *ngIf="!form.get('password')?.errors?.['required']">Минимальныя длина пароля
+        {{form.get('password')?.errors?.['minlength']?.['requiredLength']}}
+        символа.</span>
+    </div>
   </div>
-  <button type="submit">Submit</button>
-</div>
+
+  <div *ngIf=" form.invalid" class="alert">
+    Для входа все поля должны быть заполненны.
+  </div>
+
+  <button type="submit" class="btn" [disabled]="form.invalid">Submit</button>
+</form>
