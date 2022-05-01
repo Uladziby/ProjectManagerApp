@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { BASIC_URL } from './url';
 import { IBoard, IBoardCreation, IBoards } from '../interfaces/interfaces';
 
@@ -11,13 +11,8 @@ export class BoardService {
 
   getBoards(): Observable<IBoards[]> {
     const req = `${BASIC_URL}/boards`;
-
     return this.http.get<IBoards[]>(req).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
+      catchError(() => {
         return of([]);
       })
     );
@@ -25,62 +20,23 @@ export class BoardService {
 
   getBoard(id: string): Observable<IBoard> {
     const req = `${BASIC_URL}/boards/${id}`;
-    const defaultBoard: IBoard = { id: '', title: '', columns: [] };
-
-    return this.http.get<IBoard>(req).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultBoard);
-      })
-    );
+    return this.http.get<IBoard>(req);
   }
 
   createBoard(title: string) {
     const req = `${BASIC_URL}/boards`;
     const body: IBoardCreation = { title: title };
-    const defaultBoard: IBoards = { id: '', title: '' };
-
-    return this.http.post<IBoards>(req, body).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultBoard);
-      })
-    );
+    return this.http.post<IBoards>(req, body);
   }
 
   deleteBoard(id: string) {
     const req = `${BASIC_URL}/boards/${id}`;
-
-    return this.http.delete(req).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(error.code);
-      })
-    );
+    return this.http.delete(req);
   }
 
   changeBoard(id: string, title: string): Observable<IBoards> {
     const req = `${BASIC_URL}/users${id}`;
     const body: IBoardCreation = { title: title };
-    const defaultAnswer: IBoards = { id: '', title: '' };
-
-    return this.http.put<IBoards>(req, body).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultAnswer);
-      })
-    );
+    return this.http.put<IBoards>(req, body);
   }
 }

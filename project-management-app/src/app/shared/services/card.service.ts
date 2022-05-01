@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { BASIC_URL } from './url';
 import { IColumn, IColumnCreation, IColumns } from '../interfaces/interfaces';
 
@@ -11,13 +11,8 @@ export class CardService {
 
   getCards(boardId: string): Observable<IColumns[]> {
     const req = `${BASIC_URL}/boards/${boardId}/columns`;
-
     return this.http.get<IColumns[]>(req).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
+      catchError(() => {
         return of([]);
       })
     );
@@ -25,46 +20,17 @@ export class CardService {
 
   getCard(boardId: string, columnId: string): Observable<IColumn> {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}`;
-    const defaultColumn: IColumn = { id: '', title: '', order: 0, tasks: [] };
-
-    return this.http.get<IColumn>(req).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultColumn);
-      })
-    );
+    return this.http.get<IColumn>(req);
   }
 
   createCard(boardId: string, body: IColumnCreation) {
     const req = `${BASIC_URL}/boards/${boardId}/columns`;
-    const defaultBoard: IColumns = { id: '', title: '', order: 0 };
-
-    return this.http.post<IColumns>(req, body).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultBoard);
-      })
-    );
+    return this.http.post<IColumns>(req, body);
   }
 
   deleteBoard(boardId: string, columnId: string) {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}`;
-
-    return this.http.delete(req).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(error.code);
-      })
-    );
+    return this.http.delete(req);
   }
 
   changeBoard(
@@ -73,16 +39,6 @@ export class CardService {
     body: IColumnCreation
   ): Observable<IColumns> {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}`;
-    const defaultAnswer: IColumns = { id: '', title: '', order: 0 };
-
-    return this.http.put<IColumns>(req, body).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultAnswer);
-      })
-    );
+    return this.http.put<IColumns>(req, body);
   }
 }

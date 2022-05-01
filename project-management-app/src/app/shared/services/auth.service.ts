@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { BASIC_URL } from './url';
 import { IUser, IUserInfo, IUserSignIn } from '../interfaces/interfaces';
 
@@ -11,89 +11,31 @@ export class AuthService {
 
   getUsers(): Observable<IUser[]> {
     const req = `${BASIC_URL}/users`;
-
-    return this.http.get<IUser[]>(req).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of([]);
-      })
-    );
+    return this.http.get<IUser[]>(req).pipe(catchError(() => of([])));
   }
 
   getUser(id: string): Observable<IUser> {
     const req = `${BASIC_URL}/users/${id}`;
-    const defaultUser = { id: '', name: '', login: '' };
-
-    return this.http.get<IUser>(req).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultUser);
-      })
-    );
+    return this.http.get<IUser>(req);
   }
 
   deleteUser(id: string) {
     const req = `${BASIC_URL}/users/${id}`;
-
-    return this.http.delete(req).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(error.code);
-      })
-    );
+    return this.http.delete(req);
   }
 
   changeUser(id: string, info: IUserInfo): Observable<IUser> {
     const req = `${BASIC_URL}/users${id}`;
-    const defaultUser = { id: '', name: '', login: '' };
-
-    return this.http.put<IUser>(req, info).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultUser);
-      })
-    );
+    return this.http.put<IUser>(req, info);
   }
 
   signIn(info: IUserSignIn): Observable<IUserSignIn> {
     const req = `${BASIC_URL}/signin`;
-    const defaultUser = { login: '', password: '' };
-
-    return this.http.post<IUserSignIn>(req, info).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultUser);
-      })
-    );
+    return this.http.post<IUserSignIn>(req, info);
   }
 
   signUp(info: IUserInfo): Observable<IUserInfo> {
     const req = `${BASIC_URL}/signup`;
-    const defaultUser = { name: '', login: '', password: '' };
-
-    return this.http.post<IUserInfo>(req, info).pipe(
-      map((res) => {
-        return res;
-      }),
-      catchError((error) => {
-        console.error(error.message);
-        return of(defaultUser);
-      })
-    );
+    return this.http.post<IUserInfo>(req, info);
   }
 }
