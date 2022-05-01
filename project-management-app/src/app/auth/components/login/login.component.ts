@@ -1,3 +1,4 @@
+import { Login } from './../../auth.component';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -24,11 +25,9 @@ export class LoginComponent implements OnInit {
 
   }
 
-  regUser() {
-    console.log({ ...this.form.value });
-
+  signin() {
+    const user = this.form.value
+    console.log(user);
   }
-
-
 
 }

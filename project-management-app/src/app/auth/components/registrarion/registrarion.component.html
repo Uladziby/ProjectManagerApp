@@ -34,13 +34,14 @@
     <div class="form-control">
       <label>Подтверждение пароля:</label>
       <input type="password" formControlName="passwordConfirm" [class.redBorder]="pass.errors?.['custom']">
-      <div class="valid" *ngIf="pass.get('passwordConfirm')?.touched && pass.get('passwordConfirm')?.invalid">
-        <span *ngIf="pass.get('passwordConfirm')?.errors?.['required']">Поле не может быть пустым.</span>
-        <span *ngIf="!(pass.errors?.['custom']||pass.get('passwordConfirm')?.errors?.['required'])">Минимальныя длина
-          пароля
+      <div class="valid" *ngIf="pass.get('passwordConfirm')?.touched">
+        <span *ngIf="pass.get('passwordConfirm')?.errors?.['required']">Поле не может быть пустым. </span>
+        <span *ngIf="!(pass.get('passwordConfirm')?.errors?.['required'])
+          &&  pass.get('passwordConfirm')?.invalid">
+          Минимальныя длина пароля.
           {{pass.get('passwordConfirm')?.errors?.['minlength']?.['requiredLength']}}
           символа.</span>
-        <span *ngIf="pass.errors?.['custom']">Пароли не совпадают</span>
+        <span *ngIf="pass.errors?.['custom']">Пароли не совпадают. </span>
       </div>
     </div>
   </div>

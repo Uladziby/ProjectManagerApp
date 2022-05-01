@@ -14,7 +14,7 @@ export class RegistrarionComponent implements OnInit {
     this.pass = new FormGroup({
       password: new FormControl('', [Validators.minLength(4), Validators.required]),
       passwordConfirm: new FormControl('', [Validators.minLength(4), Validators.required]),
-    }, this.passEqual.bind(this))
+    }, this.checkPassEqual.bind(this))
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       login: new FormControl('', [Validators.required]),
@@ -28,11 +28,14 @@ export class RegistrarionComponent implements OnInit {
   }
 
   regUser() {
-    console.log({ ...this.form.value });
+    const { name, login } = this.form.value;
+    const { password, passwordConfirm } = this.pass.value;
+    const newUser = { name, login, password }
+    console.log(newUser);
 
   }
 
-  private passEqual() {
+  private checkPassEqual() {
     if (this.pass) {
       const pass = this.pass
       const a = (group: FormGroup) => {
