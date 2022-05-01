@@ -38,9 +38,8 @@ export class CardService {
     );
   }
 
-  createCard(boardId: string, order: number, title: string) {
+  createCard(boardId: string, body: IColumnCreation) {
     const req = `${BASIC_URL}/boards/${boardId}/columns`;
-    const body: IColumnCreation = { title: title, order: order };
     const defaultBoard: IColumns = { id: '', title: '', order: 0 };
 
     return this.http.post<IColumns>(req, body).pipe(
@@ -71,11 +70,9 @@ export class CardService {
   changeBoard(
     boardId: string,
     columnId: string,
-    order: number,
-    title: string
+    body: IColumnCreation
   ): Observable<IColumns> {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}`;
-    const body: IColumnCreation = { title: title, order: order };
     const defaultAnswer: IColumns = { id: '', title: '', order: 0 };
 
     return this.http.put<IColumns>(req, body).pipe(

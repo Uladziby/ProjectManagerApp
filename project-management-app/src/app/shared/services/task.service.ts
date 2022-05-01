@@ -53,18 +53,9 @@ export class TaskService {
   createCard(
     boardId: string,
     columnId: string,
-    order: number,
-    title: string,
-    description: string,
-    userId: string
+    body: ITaskCreate
   ): Observable<ITask> {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}/tasks`;
-    const body: ITaskCreate = {
-      title: title,
-      order: order,
-      description: description,
-      userId: userId,
-    };
     const defaultTask: ITask = {
       id: '',
       title: '',
@@ -100,23 +91,8 @@ export class TaskService {
     );
   }
 
-  changeCard(
-    boardId: string,
-    columnId: string,
-    order: number,
-    title: string,
-    description: string,
-    userId: string
-  ): Observable<ITask> {
-    const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}`;
-    const body: ITaskNewInfo = {
-      title: title,
-      order: order,
-      description: description,
-      userId: userId,
-      boardId: boardId,
-      columnId: columnId,
-    };
+  changeCard(body: ITaskNewInfo): Observable<ITask> {
+    const req = `${BASIC_URL}/boards/${body.boardId}/columns/${body.columnId}`;
     const defaultTask: ITask = {
       id: '',
       title: '',
