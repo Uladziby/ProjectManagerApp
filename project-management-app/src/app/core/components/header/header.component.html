@@ -1,6 +1,6 @@
 <header>
-  <mat-toolbar color="accent">
-    <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
+  <mat-toolbar layout="row" color="accent">
+    <mat-slide-toggle  [(ngModel)]="slideToggle" (change)="OnChangeLang()">
       {{ this.lang }}
     </mat-slide-toggle>
     <button mat-button color="primary"  [disabled]="!this.isLogin">
@@ -28,13 +28,13 @@
         <button class="btn_menu" mat-flat-button (click)="OnLogout()">Logout</button>
       </mat-expansion-panel>
     </mat-accordion>
-    <mat-card *ngIf="this.isLogin">
+    <ng-container *ngIf="this.isLogin">
       <button mat-button color="primary" >
         Login
       </button>
       <button mat-button color="primary">
         SignUp
       </button>
-    </mat-card>
+    </ng-container>
   </mat-toolbar>
 </header>
