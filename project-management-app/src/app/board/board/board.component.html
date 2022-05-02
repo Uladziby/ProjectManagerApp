@@ -1,0 +1,9 @@
+<!-- <a [routerLink]="video.id.videoId">  -->
+<div>
+  <p>{{(board$ | async)?.title}}</p>
+  <div>
+    <div *ngFor="let col of (board$ | async)?.columns">{{col.title}}</div>
+    <mat-icon (click)='delete()'>delete</mat-icon>
+  </div>
+</div>
+<!-- </a> -->

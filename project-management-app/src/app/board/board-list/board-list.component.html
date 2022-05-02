@@ -1,0 +1,2 @@
+<h2>Мои доски</h2>
+<app-board *ngFor="let board of boardList$ | async" [id]="board.id"></app-board>
