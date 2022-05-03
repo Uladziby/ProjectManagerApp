@@ -1,0 +1,18 @@
+input {
+  &.ng-invalid.ng-touched {
+    border: 1px solid rgb(177, 5, 5);
+  }
+
+  &.ng-valid.ng-touched {
+    border: 1px solid rgb(6, 99, 6);
+  }
+
+  &.redBorder.ng-valid.ng-touched {
+    border: 1px solid rgb(177, 5, 5);
+  }
+}
+
+.valid {
+  color: rgb(177, 5, 5);
+  font-size: 0.8em;
+}
