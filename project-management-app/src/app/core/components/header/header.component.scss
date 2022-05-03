@@ -1,39 +1,52 @@
 mat-toolbar {
-    padding: 2%;
-    display: flex;
-    justify-content: space-around;
+  padding: 3%;
+  display: flex;
+  justify-content: space-around;
 }
-header{
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  box-shadow: rgba(255, 255, 255, 0.3);
 }
 .mat-form-field + .mat-form-field {
-    margin-left: 8px;
-  }
+  margin-left: 8px;
+}
 
-  .btn_menu{
-      background-color: transparent;
+.btn_menu {
+  background-color: transparent;
+}
+.mat-expansion-panel-body {
+  display: flex;
+  flex-direction: column;
+}
+.mat-accordion > .mat-expansion-panel-spacing:first-child {
+  margin-top: 70px;
+}
+.mat-expansion-panel {
+  background: transparent;
+  & button {
+    color: black;
   }
-  .mat-expansion-panel-body{
-      display: flex;
-      flex-direction: column;
+}
+.mat-expansion-panel-header-title {
+  display: flex;
+  justify-content: space-around;
+  .name_user {
+    color: black;
   }
-  .mat-accordion>.mat-expansion-panel-spacing:first-child{
-      margin-top: 70px;
-  }
-  .mat-expansion-panel{
-     background: transparent;
-     & button{
-         color: black;
-     }
-  }
-  .name_user{
-      color : pink
-  }
-
-  @media (overflow-block :scroll){
-      header{
-          display: none;
-      }
-  }
+}
+.btns_login{
+    
+}
+.fixed {
+  padding-top: 1rem;
+  background-color: transparent;
+  transition: all 0.1s;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  box-shadow: rgba(255, 255, 255, 0.3);
+  padding: 25px 0px;
+}

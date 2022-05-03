@@ -1,3 +1,5 @@
+import { SharedModule } from './shared/shared.module';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -11,8 +13,9 @@ import { CoreModule } from './core/core.module';
     AppComponent
   ],
   imports: [
-    BrowserModule,
     CoreModule,
+    SharedModule,
+    BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],

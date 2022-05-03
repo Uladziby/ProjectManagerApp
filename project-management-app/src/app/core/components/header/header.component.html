@@ -1,13 +1,17 @@
-<header>
-  <mat-toolbar layout="row" color="accent">
-    <mat-slide-toggle  [(ngModel)]="slideToggle" (change)="OnChangeLang()">
+<header (scroll)="onScroll()">
+  <mat-toolbar
+    layout="row"
+    color="accent"
+    [ngClass]="navbarFixed ? 'fixed' : 'nofixed'"
+  >
+    <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
       {{ this.lang }}
     </mat-slide-toggle>
-    <button mat-button color="primary"  [disabled]="!this.isLogin">
+    <button mat-button color="primary" [disabled]="!this.isLogin">
       <mat-icon> add </mat-icon>
       Create new board
     </button>
-    <mat-accordion  *ngIf="this.isLogin">
+    <mat-accordion *ngIf="this.isLogin">
       <mat-expansion-panel
         role="button"
         color="accent"
@@ -20,21 +24,20 @@
             <button mat-mini-fab color="primary">
               <mat-icon> person </mat-icon>
             </button>
-            Hello, User
+            <span class="name_user"> Hello, User </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-
         <button class="btn_menu" mat-flat-button>Edit profile</button>
-        <button class="btn_menu" mat-flat-button (click)="OnLogout()">Logout</button>
+        <button class="btn_menu" mat-flat-button (click)="OnLogout()">
+          Logout
+        </button>
       </mat-expansion-panel>
     </mat-accordion>
-    <ng-container *ngIf="this.isLogin">
-      <button mat-button color="primary" >
-        Login
-      </button>
-      <button mat-button color="primary">
-        SignUp
-      </button>
+    <ng-container *ngIf="!this.isLogin">
+      <div class="btns_login">
+        <button mat-button color="primary" (click)="OnLogin()">Login</button>
+        <button mat-button color="primary">SignUp</button>
+      </div>
     </ng-container>
   </mat-toolbar>
 </header>
