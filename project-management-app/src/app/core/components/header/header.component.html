@@ -1,0 +1,43 @@
+<header (scroll)="onScroll()">
+  <mat-toolbar
+    layout="row"
+    color="accent"
+    [ngClass]="navbarFixed ? 'fixed' : 'nofixed'"
+  >
+    <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
+      {{ this.lang }}
+    </mat-slide-toggle>
+    <button mat-button color="primary" [disabled]="!this.isLogin">
+      <mat-icon> add </mat-icon>
+      Create new board
+    </button>
+    <mat-accordion *ngIf="this.isLogin">
+      <mat-expansion-panel
+        role="button"
+        color="accent"
+        class="user_menu"
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title color="primary">
+            <button mat-mini-fab color="primary">
+              <mat-icon> person </mat-icon>
+            </button>
+            <span class="name_user"> Hello, User </span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <button class="btn_menu" mat-flat-button>Edit profile</button>
+        <button class="btn_menu" mat-flat-button (click)="OnLogout()">
+          Logout
+        </button>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <ng-container *ngIf="!this.isLogin">
+      <div class="btns_login">
+        <button mat-button color="primary" (click)="OnLogin()">Login</button>
+        <button mat-button color="primary">SignUp</button>
+      </div>
+    </ng-container>
+  </mat-toolbar>
+</header>
