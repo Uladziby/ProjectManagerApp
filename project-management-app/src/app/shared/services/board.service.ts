@@ -5,7 +5,9 @@ import { catchError } from 'rxjs/operators';
 import { BASIC_URL } from './url';
 import { IBoard, IBoardCreation, IBoards } from '../interfaces/interfaces';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class BoardService {
   constructor(private http: HttpClient) {}
 

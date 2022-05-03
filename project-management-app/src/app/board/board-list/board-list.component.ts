@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, map, Subscription, switchMap } from 'rxjs';
 import { IBoards } from 'src/app/shared/interfaces/interfaces';
 import { BoardService } from 'src/app/shared/services/board.service';

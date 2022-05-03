@@ -7,12 +7,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
-
+import { BoardListComponent } from './board/board-list/board-list.component';
+import { BoardComponent } from './board/board/board.component';
+import { TOKEN_INTERCEPTOR } from './shared/services/token.interceptor';
+import { BoardModule } from './board/board.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     CoreModule,
     SharedModule,
@@ -20,9 +21,9 @@ import { CoreModule } from './core/core.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthModule,
-
+    BoardModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [TOKEN_INTERCEPTOR],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -3,9 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { BASIC_URL } from './url';
-import { IUser, IUserInfo, IUserSignIn } from '../interfaces/interfaces';
+import {
+  IUser,
+  IUserInfo,
+  IUserSignIn,
+  IUserToken,
+} from '../interfaces/interfaces';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
   constructor(private http: HttpClient) {}
 
@@ -29,9 +36,9 @@ export class AuthService {
     return this.http.put<IUser>(req, info);
   }
 
-  signIn(info: IUserSignIn): Observable<IUserSignIn> {
+  signIn(info: IUserSignIn): Observable<IUserToken> {
     const req = `${BASIC_URL}/signin`;
-    return this.http.post<IUserSignIn>(req, info);
+    return this.http.post<IUserToken>(req, info);
   }
 
   signUp(info: IUserInfo): Observable<IUserInfo> {

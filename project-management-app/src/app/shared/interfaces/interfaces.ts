@@ -17,6 +17,10 @@ export interface IUserSignIn {
   password: string;
 }
 
+export interface IUserToken {
+  token: string;
+}
+
 //getting boards list
 export interface IBoards {
   id: string;

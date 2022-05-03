@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, catchError, of, Subscription } from 'rxjs';
 import { IBoard } from 'src/app/shared/interfaces/interfaces';
 import { BoardService } from 'src/app/shared/services/board.service';
@@ -13,8 +13,7 @@ import { ModalComponent } from 'src/app/core/modal/modal.component';
 export class BoardComponent implements OnInit {
   @Input() id!: string;
   constructor(
-    private boardService: BoardService,
-    public matDialog: MatDialog
+    private boardService: BoardService // public matDialog: MatDialog
   ) {}
   private subs!: Subscription;
   board$ = new BehaviorSubject<IBoard>({ id: '', title: '', columns: [] });
@@ -35,14 +34,14 @@ export class BoardComponent implements OnInit {
       .pipe(catchError((error) => of(`Bad Promise: ${error}`)));
   }
 
-  openModal() {
-    const dialogConfig = new MatDialogConfig();
-    // The user can't close the dialog by clicking outside its body
-    dialogConfig.disableClose = true;
-    dialogConfig.id = 'modal-component';
-    dialogConfig.height = '350px';
-    dialogConfig.width = '600px';
-    // https://material.angular.io/components/dialog/overview
-    const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
-  }
+  // openModal() {
+  //   const dialogConfig = new MatDialogConfig();
+  //   // The user can't close the dialog by clicking outside its body
+  //   dialogConfig.disableClose = true;
+  //   dialogConfig.id = 'modal-component';
+  //   dialogConfig.height = '350px';
+  //   dialogConfig.width = '600px';
+  //   // https://material.angular.io/components/dialog/overview
+  //   const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+  // }
 }
