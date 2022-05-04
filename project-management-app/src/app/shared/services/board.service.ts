@@ -33,8 +33,14 @@ export class BoardService {
 
   deleteBoard(id: string) {
     const req = `${BASIC_URL}/boards/${id}`;
+    console.log('service deleting', id);
     return this.http.delete(req);
   }
+  // deleteBoard(id: string) {
+  //   const req = `${BASIC_URL}/boards/${id}`;
+  //   console.log('service deleting', id);
+  //   return this.http.delete(req).subscribe(() => {});
+  // }
 
   changeBoard(id: string, title: string): Observable<IBoards> {
     const req = `${BASIC_URL}/users${id}`;

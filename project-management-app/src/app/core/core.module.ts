@@ -13,6 +13,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FooterComponent } from './components/footer/footer.component';
 import { ModalComponent } from './modal/modal.component';
+import { ApproveModalComponent } from './modal/approve-modal/approve-modal.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const materialModules = [
   MatToolbarModule,
@@ -26,8 +29,27 @@ const materialModules = [
 ];
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, ModalComponent],
-  exports: [HeaderComponent, FooterComponent],
-  imports: [CommonModule, SharedModule, ...materialModules, FormsModule],
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    ModalComponent,
+    ApproveModalComponent,
+  ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ...materialModules,
+    FormsModule,
+    OverlayModule,
+    MatDialogModule,
+  ],
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    ...materialModules,
+    ModalComponent,
+    ApproveModalComponent,
+    OverlayModule,
+  ],
 })
 export class CoreModule {}

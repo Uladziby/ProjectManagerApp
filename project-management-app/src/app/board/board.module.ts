@@ -4,10 +4,11 @@ import { BoardListComponent } from './board-list/board-list.component';
 import { BoardComponent } from './board/board.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [BoardListComponent, BoardComponent],
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, CoreModule],
   exports: [BoardListComponent, BoardComponent],
   providers: [
     MatDialog,

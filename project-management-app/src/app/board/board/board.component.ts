@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, catchError, of, Subscription } from 'rxjs';
-import { IBoard } from 'src/app/shared/interfaces/interfaces';
+import { IBoard, IBoards } from 'src/app/shared/interfaces/interfaces';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ModalComponent } from 'src/app/core/modal/modal.component';
+import { ApproveModalComponent } from 'src/app/core/modal/approve-modal/approve-modal.component';
 
 @Component({
   selector: 'app-board',
@@ -12,8 +13,10 @@ import { ModalComponent } from 'src/app/core/modal/modal.component';
 })
 export class BoardComponent implements OnInit {
   @Input() id!: string;
+  @Input() boardList$!: BehaviorSubject<IBoards[]>;
   constructor(
-    private boardService: BoardService // public matDialog: MatDialog
+    private boardService: BoardService,
+    public matDialog: MatDialog
   ) {}
   private subs!: Subscription;
   board$ = new BehaviorSubject<IBoard>({ id: '', title: '', columns: [] });
@@ -21,7 +24,6 @@ export class BoardComponent implements OnInit {
   ngOnInit(): void {
     this.subs = this.boardService.getBoard(this.id).subscribe((items) => {
       this.board$.next(items);
-      console.log('board', this.board$);
     });
   }
   ngOnDestroy(): void {
@@ -29,19 +31,30 @@ export class BoardComponent implements OnInit {
   }
 
   delete() {
-    this.boardService
-      .deleteBoard(this.id)
-      .pipe(catchError((error) => of(`Bad Promise: ${error}`)));
+    console.log('deleting', this.id);
+    this.boardService.deleteBoard(this.id).subscribe(() => {
+      this.boardService.getBoards().subscribe((items) => {
+        this.boardList$.next(items);
+        console.log('board list', this.boardList$);
+      });
+    });
   }
 
-  // openModal() {
-  //   const dialogConfig = new MatDialogConfig();
-  //   // The user can't close the dialog by clicking outside its body
-  //   dialogConfig.disableClose = true;
-  //   dialogConfig.id = 'modal-component';
-  //   dialogConfig.height = '350px';
-  //   dialogConfig.width = '600px';
-  //   // https://material.angular.io/components/dialog/overview
-  //   const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
-  // }
+  openApproveModal() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-approve-component';
+    dialogConfig.height = '150px';
+    dialogConfig.width = '400px';
+    const modalDialog = this.matDialog.open(
+      ApproveModalComponent,
+      dialogConfig
+    );
+    modalDialog.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result) {
+        this.delete();
+      }
+    });
+  }
 }

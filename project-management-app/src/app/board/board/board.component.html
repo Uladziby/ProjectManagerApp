@@ -1,9 +1,9 @@
 <!-- <a [routerLink]="video.id.videoId">  -->
-<div>
+<div color="accent" layout="row">
   <p>{{(board$ | async)?.title}}</p>
   <div>
-    <div *ngFor="let col of (board$ | async)?.columns">{{col.title}}</div>
-    <!-- <mat-icon (click)='delete()'>delete</mat-icon> -->
+    <div *ngFor="let col of (board$ | async)?.columns" layout="column">{{col.title}}</div>
+    <mat-icon (click)='openApproveModal()'>delete</mat-icon>
 
   </div>
 </div>
