@@ -7,21 +7,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
-
+import { TOKEN_INTERCEPTOR } from './shared/services/token.interceptor';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     CoreModule,
     SharedModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [TOKEN_INTERCEPTOR],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

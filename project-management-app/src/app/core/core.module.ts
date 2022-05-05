@@ -7,13 +7,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
-import {MatIconModule} from '@angular/material/icon';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ModalComponent } from './modal/modal.component';
+import { ApproveModalComponent } from './modal/approve-modal/approve-modal.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CreationModalComponent } from './modal/creation-modal/creation-modal.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -31,6 +36,9 @@ const materialModules = [
     HeaderComponent,
     FooterComponent,
     NotFoundComponent,
+    ModalComponent,
+    ApproveModalComponent,
+    CreationModalComponent,
   ],
   imports: [
     CommonModule,
@@ -38,10 +46,17 @@ const materialModules = [
     SharedModule,
     ...materialModules,
     FormsModule,
+    OverlayModule,
+    MatDialogModule,
   ],
-  exports:[
-    HeaderComponent,FooterComponent,NotFoundComponent,
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    NotFoundComponent,
+    ...materialModules,
+    ModalComponent,
+    ApproveModalComponent,
+    OverlayModule,
   ],
-
 })
 export class CoreModule {}

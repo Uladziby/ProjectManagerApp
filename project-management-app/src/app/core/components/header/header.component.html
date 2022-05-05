@@ -7,7 +7,7 @@
     <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
       {{ this.lang }}
     </mat-slide-toggle>
-    <button mat-button color="primary" [disabled]="!this.isLogin">
+    <button mat-button color="primary" [disabled]="!this.isLogin" (click)="newBoard()">
       <mat-icon> add </mat-icon>
       Create new board
     </button>

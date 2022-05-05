@@ -9,7 +9,7 @@ import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, BrowserModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule],
   providers: [AuthService, BoardService, CardService, TaskService],
 })
 export class SharedModule {}

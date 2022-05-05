@@ -3,5 +3,6 @@ export enum RouteEnum {
     login = 'login',
     signup = 'signup',
     boards ='boards',
-    notFound = "404"
+    notFound = "404",
+    
 }

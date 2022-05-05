@@ -1,6 +1,9 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteEnum } from 'src/app/shared/interfaces/enums';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { BoardService } from 'src/app/shared/services/board.service';
+import { CreationModalComponent } from '../../modal/creation-modal/creation-modal.component';
 
 @Component({
   selector: 'app-header',
@@ -14,9 +17,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isLogin: boolean = false;
   public navbarFixed: boolean = false;
 
-  constructor(private router : Router) {
+  constructor(public matDialog: MatDialog, private boardService: BoardService, private router : Router) {
     localStorage.setItem('user', 'yes');
   }
+
   ngOnDestroy(): void {
     window.removeEventListener('scroll', () => this.onScroll(), true);
   }
@@ -52,6 +56,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate([RouteEnum.signup])
   }
   
+  newBoard() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-approve-component';
+    dialogConfig.height = '300px';
+    dialogConfig.width = '400px';
+    dialogConfig.data = { task: 'Enter a new board title', title: 'New Board' };
+    const modalDialog = this.matDialog.open(
+      CreationModalComponent,
+      dialogConfig
+    );
+    modalDialog.afterClosed().subscribe((result) => {
+      console.log(result);
+      if (result) {
+        this.boardService.createBoard(result).subscribe((result) => {
+          console.log('new board', result);
+        });
+      }
+    });
+  }
+
   @HostListener('document:scroll', ['$event'])
   onScroll() {
     if (window.scrollY >= 100) {

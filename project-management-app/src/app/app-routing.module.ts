@@ -1,3 +1,4 @@
+import { BoardModule } from './board/board.module';
 import { RouteEnum } from 'src/app/shared/interfaces/enums';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -21,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: RouteEnum.boards,
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+    loadChildren: () => import('./board/board.module').then((m) => m.BoardModule),
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },
@@ -33,4 +34,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-//ROuting
