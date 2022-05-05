@@ -1,4 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { RouteEnum } from 'src/app/shared/interfaces/enums';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isLogin: boolean = false;
   public navbarFixed: boolean = false;
 
-  constructor() {
+  constructor(private router : Router) {
     localStorage.setItem('user', 'yes');
   }
   ngOnDestroy(): void {
@@ -34,15 +36,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
       ? (this.lang = 'Русский')
       : (this.lang = 'English');
   }
+
   OnLogin(): void {
-    localStorage.setItem('user', 'yes');
+    this.router.navigate([RouteEnum.login])
     this.onCheckLogin();
   }
+
   OnLogout(): void {
+    this.router.navigate([RouteEnum.start])
     localStorage.clear();
     this.onCheckLogin();
   }
 
+  OnSignUp(): void{
+    this.router.navigate([RouteEnum.signup])
+  }
+  
   @HostListener('document:scroll', ['$event'])
   onScroll() {
     if (window.scrollY >= 100) {

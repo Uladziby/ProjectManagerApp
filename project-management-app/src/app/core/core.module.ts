@@ -12,6 +12,9 @@ import { FormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FooterComponent } from './components/footer/footer.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 const materialModules = [
   MatToolbarModule,
   MatButtonModule,
@@ -26,16 +29,19 @@ const materialModules = [
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
-  ],
-  exports:[
-    HeaderComponent,FooterComponent
+    FooterComponent,
+    NotFoundComponent,
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     SharedModule,
     ...materialModules,
     FormsModule,
-  ]
+  ],
+  exports:[
+    HeaderComponent,FooterComponent,NotFoundComponent,
+  ],
+
 })
-export class CoreModule { }
+export class CoreModule {}

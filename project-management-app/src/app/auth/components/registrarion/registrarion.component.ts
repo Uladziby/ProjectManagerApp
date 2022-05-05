@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrarion',
@@ -10,7 +11,7 @@ export class RegistrarionComponent implements OnInit {
   form: FormGroup
   pass: FormGroup
 
-  constructor() {
+  constructor(private router:Router) {
     this.pass = new FormGroup({
       password: new FormControl('', [Validators.minLength(4), Validators.required]),
       passwordConfirm: new FormControl('', [Validators.minLength(4), Validators.required]),
@@ -24,7 +25,7 @@ export class RegistrarionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+   
   }
 
   regUser() {
