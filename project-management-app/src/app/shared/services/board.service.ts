@@ -13,6 +13,7 @@ export class BoardService {
 
   getBoards(): Observable<IBoards[]> {
     const req = `${BASIC_URL}/boards`;
+    console.log('getting boards');
     return this.http.get<IBoards[]>(req).pipe(
       catchError(() => {
         return of([]);

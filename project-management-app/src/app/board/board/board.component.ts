@@ -31,7 +31,6 @@ export class BoardComponent implements OnInit {
   }
 
   delete() {
-    console.log('deleting', this.id);
     this.boardService.deleteBoard(this.id).subscribe(() => {
       this.boardService.getBoards().subscribe((items) => {
         this.boardList$.next(items);

@@ -16,6 +16,7 @@ import { ModalComponent } from './modal/modal.component';
 import { ApproveModalComponent } from './modal/approve-modal/approve-modal.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CreationModalComponent } from './modal/creation-modal/creation-modal.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -34,6 +35,7 @@ const materialModules = [
     FooterComponent,
     ModalComponent,
     ApproveModalComponent,
+    CreationModalComponent,
   ],
   imports: [
     CommonModule,
