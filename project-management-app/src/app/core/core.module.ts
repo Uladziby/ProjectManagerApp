@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FooterComponent } from './components/footer/footer.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './modal/modal.component';
 import { ApproveModalComponent } from './modal/approve-modal/approve-modal.component';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -33,12 +35,14 @@ const materialModules = [
   declarations: [
     HeaderComponent,
     FooterComponent,
+    NotFoundComponent,
     ModalComponent,
     ApproveModalComponent,
     CreationModalComponent,
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     SharedModule,
     ...materialModules,
     FormsModule,
@@ -48,6 +52,7 @@ const materialModules = [
   exports: [
     HeaderComponent,
     FooterComponent,
+    NotFoundComponent,
     ...materialModules,
     ModalComponent,
     ApproveModalComponent,

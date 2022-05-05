@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { TOKEN_INTERCEPTOR } from './shared/services/token.interceptor';
-import { BoardModule } from './board/board.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,8 +17,6 @@ import { BoardModule } from './board/board.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthModule,
-    BoardModule,
   ],
   providers: [TOKEN_INTERCEPTOR],
   bootstrap: [AppComponent],

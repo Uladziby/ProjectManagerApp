@@ -1,3 +1,4 @@
+import {  Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 export interface Login {
@@ -25,13 +26,15 @@ export class AuthComponent implements OnInit {
     login: '',
     password: ''
   }
+  public href: string = "";
 
 
-  constructor() {
+  constructor(private router: Router,) {
   }
 
   ngOnInit(): void {
-
+    this.href = this.router.url;
+    console.log(this.router.url);
   }
 
 }

@@ -1,4 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { RouteEnum } from 'src/app/shared/interfaces/enums';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { CreationModalComponent } from '../../modal/creation-modal/creation-modal.component';
@@ -15,7 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isLogin: boolean = false;
   public navbarFixed: boolean = false;
 
-  constructor(public matDialog: MatDialog, private boardService: BoardService) {
+  constructor(public matDialog: MatDialog, private boardService: BoardService, private router : Router) {
     localStorage.setItem('user', 'yes');
   }
 
@@ -38,15 +40,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
       ? (this.lang = 'Русский')
       : (this.lang = 'English');
   }
+
   OnLogin(): void {
-    localStorage.setItem('user', 'yes');
+    this.router.navigate([RouteEnum.login])
     this.onCheckLogin();
   }
+
   OnLogout(): void {
+    this.router.navigate([RouteEnum.start])
     localStorage.clear();
     this.onCheckLogin();
   }
 
+  OnSignUp(): void{
+    this.router.navigate([RouteEnum.signup])
+  }
+  
   newBoard() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;

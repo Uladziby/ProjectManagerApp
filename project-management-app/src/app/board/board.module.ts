@@ -1,3 +1,4 @@
+import { BoardRoutingModule } from './board-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BoardListComponent } from './board-list/board-list.component';
@@ -8,7 +9,7 @@ import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [BoardListComponent, BoardComponent],
-  imports: [CommonModule, MatIconModule, CoreModule],
+  imports: [CommonModule, MatIconModule, CoreModule,BoardRoutingModule],
   exports: [BoardListComponent, BoardComponent],
   providers: [
     MatDialog,

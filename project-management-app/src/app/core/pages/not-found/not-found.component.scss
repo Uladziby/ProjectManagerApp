@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
+:root {
+  --blue: #0e0620;
+  --white: #fff;
+  --green: #2ccf6d;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+.btn{
+  
+}
+h1 {
+    font-size: 7.5em;
+    margin: 15px 0px;
+    font-weight:bold;
+  }
+  h2 {
+    font-weight:bold;
+  }
