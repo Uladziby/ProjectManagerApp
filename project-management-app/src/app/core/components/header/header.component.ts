@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-approve-component';
-    dialogConfig.height = '250px';
+    dialogConfig.height = '300px';
     dialogConfig.width = '400px';
     dialogConfig.data = { task: 'Enter a new board title', title: 'New Board' };
     const modalDialog = this.matDialog.open(
