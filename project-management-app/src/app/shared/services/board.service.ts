@@ -5,12 +5,15 @@ import { catchError } from 'rxjs/operators';
 import { BASIC_URL } from './url';
 import { IBoard, IBoardCreation, IBoards } from '../interfaces/interfaces';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class BoardService {
   constructor(private http: HttpClient) {}
 
   getBoards(): Observable<IBoards[]> {
     const req = `${BASIC_URL}/boards`;
+    console.log('getting boards');
     return this.http.get<IBoards[]>(req).pipe(
       catchError(() => {
         return of([]);
@@ -31,8 +34,14 @@ export class BoardService {
 
   deleteBoard(id: string) {
     const req = `${BASIC_URL}/boards/${id}`;
+    console.log('service deleting', id);
     return this.http.delete(req);
   }
+  // deleteBoard(id: string) {
+  //   const req = `${BASIC_URL}/boards/${id}`;
+  //   console.log('service deleting', id);
+  //   return this.http.delete(req).subscribe(() => {});
+  // }
 
   changeBoard(id: string, title: string): Observable<IBoards> {
     const req = `${BASIC_URL}/users${id}`;
