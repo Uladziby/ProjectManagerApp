@@ -7,6 +7,8 @@ import { CreationModalComponent } from '../../modal/creation-modal/creation-moda
 import { LangType } from 'src/app/shared/interfaces/lang';
 import { LangService } from 'src/app/shared/services/lang.service';
 import { TRANSLATE } from 'src/app/shared/consts/translate';
+import { StateService } from 'src/app/shared/services/state.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +27,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public matDialog: MatDialog,
     private boardService: BoardService,
     private router: Router,
-    private langService: LangService
+    private langService: LangService,
+    public state: StateService,
+    public auth: AuthService
   ) {
     localStorage.setItem('user', 'yes');
   }
@@ -40,8 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onCheckLogin() {
-    const user = localStorage.getItem('user');
-    user ? (this.isLogin = true) : (this.isLogin = false);
+    return this.auth.isAuth();
   }
 
   OnChangeLang(): void {
@@ -64,13 +67,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   OnLogout(): void {
-    this.router.navigate([RouteEnum.start]);
-    localStorage.clear();
-    this.onCheckLogin();
+    this.router.navigate([RouteEnum.start])
+    this.auth.logout();
   }
-
+  editProfile() {
+    this.router.navigate([RouteEnum.editProfile])
+  }
   OnSignUp(): void {
-    this.router.navigate([RouteEnum.signup]);
+    this.router.navigate([RouteEnum.signup])
   }
 
   newBoard() {

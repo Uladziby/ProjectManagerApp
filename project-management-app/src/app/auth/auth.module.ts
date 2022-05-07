@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistrarionComponent } from './components/registrarion/registrarion.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { CoreModule } from '../core/core.module';
 
 
 
@@ -13,10 +15,11 @@ import { AuthRoutingModule } from './auth-routing.module';
     AuthComponent,
     RegistrarionComponent,
     LoginComponent,
-    
+    EditProfileComponent,
+
   ],
   imports: [
-    CommonModule, FormsModule, ReactiveFormsModule,AuthRoutingModule,
+    CommonModule, FormsModule, ReactiveFormsModule, AuthRoutingModule
   ],
   exports: [
     AuthComponent,

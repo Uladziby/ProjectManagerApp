@@ -22,6 +22,10 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
+    path: RouteEnum.editProfile,
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
     path: RouteEnum.boards,
     loadChildren: () =>
       import('./board/board.module').then((m) => m.BoardModule),

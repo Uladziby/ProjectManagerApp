@@ -3,21 +3,32 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { StateService } from 'src/app/shared/services/state.service';
+
 
 @Component({
-  selector: 'app-registrarion',
-  templateUrl: './registrarion.component.html',
-  styleUrls: ['./registrarion.component.scss']
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.scss']
 })
-export class RegistrarionComponent implements OnInit, OnDestroy {
+export class EditProfileComponent implements OnInit, OnDestroy {
+
   form: FormGroup
   pass: FormGroup;
   regSab: Subscription | undefined;
   authSab: Subscription | undefined;
   badReg = false;
   sucsess = false;
-  wrongLogin=false;
-  constructor(private router: Router, private authService:AuthService) {
+  wrongLogin = false;
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private state: StateService,
+
+
+  ) {
+
     this.pass = new FormGroup({
       password: new FormControl('', [Validators.minLength(4), Validators.required]),
       passwordConfirm: new FormControl('', [Validators.minLength(4), Validators.required]),
@@ -27,51 +38,46 @@ export class RegistrarionComponent implements OnInit, OnDestroy {
       login: new FormControl('', [Validators.required]),
       passwordGRoup: this.pass
     })
-
   }
 
   ngOnInit(): void {
-
+    this.form.controls['name'].setValue(this.state.user.name);
+    this.form.controls['login'].setValue(this.state.user.login);
+    this.pass.controls['password'].setValue(this.state.userPass);
+    this.pass.controls['passwordConfirm'].setValue(this.state.userPass);
   }
   ngOnDestroy(): void {
     if (this.authSab) {
       this.authSab.unsubscribe()
-    } 
+    }
     if (this.regSab) {
       this.regSab.unsubscribe()
     }
   }
 
-  regUser() {
+  updateUser() {
     const { name, login } = this.form.value;
     const { password, passwordConfirm } = this.pass.value;
     const newUser = { name, login, password };
-    const user = {login, password};
+
 
     this.form.disable();
 
     console.log(newUser);
 
-    this.regSab = this.authService.signUp(newUser).subscribe(
-      () => {
-        this.sucsess = true;
-        setTimeout(()=>{
-          this.authSab = this.authService.signIn(user).subscribe();
-         
-          this.router.navigate(['/boards']) 
-        this.sucsess = false;
+    this.regSab = this.authService.changeUser(this.state.user.id, newUser).subscribe(
+      (user) => {
+        this.state.updateState(user, password)
 
-        }, 3000)
-        
       },
       (err) => {
 
-if(err.status===409){
-  this.wrongLogin = true;
-} else{
-    this.badReg = true;
-}
-      
+        if (err.status === 409) {
+          this.wrongLogin = true;
+        } else {
+          this.badReg = true;
+        }
+
         this.form.enable();
         setTimeout(() => {
           this.badReg = false;
@@ -81,6 +87,38 @@ if(err.status===409){
     );
 
   }
+  deleteProfile() {
+
+    this.form.disable();
+    const ans = confirm('Удалить профиль?')
+    if (ans) {
+      this.regSab = this.authService.deleteUser(this.state.user.id,).subscribe(
+        () => {
+          this.authService.logout();
+
+          this.router.navigate(['/login'])
+        },
+        (err) => {
+
+          if (err.status === 409) {
+            this.wrongLogin = true;
+          } else {
+            this.badReg = true;
+          }
+
+          this.form.enable();
+          setTimeout(() => {
+            this.badReg = false;
+            this.wrongLogin = false;
+          }, 3000)
+        }
+      );
+    }
+
+
+
+  }
+
 
   private checkPassEqual() {
     if (this.pass) {

@@ -4,16 +4,21 @@
   </h2>
 
   <div class="form-control">
-    <label>Логин:</label>
-    <input type="text" formControlName="login">
+    <div class="input-block">
+      <div>Логин:</div>
+      <input type="text" formControlName="login">
+    </div>
     <div class="valid" *ngIf="form.get('login')?.touched && form.get('login')?.invalid">
       Поле не может быть пустым
     </div>
   </div>
 
   <div class=" form-control">
-    <label> Имя:</label>
-    <input type="text" formControlName="name">
+    <div class="input-block">
+      <div> Имя:</div>
+      <input type="text" formControlName="name">
+    </div>
+
     <div class="valid" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
       Поле не может быть пустым.
     </div>
@@ -22,18 +27,24 @@
   <div [formGroup]="pass">
 
     <div class="form-control">
-      <label>Пароль:</label>
-      <input type="password" formControlName="password">
+      <div class="input-block">
+        <div>Пароль:</div>
+        <input type="password" formControlName="password">
+      </div>
+
       <div class="valid" *ngIf="pass.get('password')?.touched && pass.get('password')?.invalid">
         <span *ngIf="pass.get('password')?.errors?.['required']">Поле не может быть пустым.</span>
-        <span>Минимальныя длина пароля {{pass.get('password')?.errors?.['minlength']?.['requiredLength']}}
+        <span *ngIf="!pass.get('password')?.errors?.['required']">Минимальныя длина пароля {{pass.get('password')?.errors?.['minlength']?.['requiredLength']}}
           символа.</span>
       </div>
     </div>
 
     <div class="form-control">
-      <label>Подтверждение пароля:</label>
+      <div class="input-block">
+             <div>Подтверждение пароля:</div>
       <input type="password" formControlName="passwordConfirm" [class.redBorder]="pass.errors?.['custom']">
+      </div>
+ 
       <div class="valid" *ngIf="pass.get('passwordConfirm')?.touched">
         <span *ngIf="pass.get('passwordConfirm')?.errors?.['required']">Поле не может быть пустым. </span>
         <span *ngIf="!(pass.get('passwordConfirm')?.errors?.['required'])
@@ -49,6 +60,17 @@
   <div *ngIf=" form.invalid" class="alert">
     Для регистрации все поля должны быть заполненны.
   </div>
-
+ <div *ngIf=" sucsess" class="alert alert-sucsess">
+    Пользователь успешно зарегистрирован
+  </div>
+  <div *ngIf=" badReg" class="alert alert-badReg">
+    Что-то пошло не так, попробуйте еще раз.
+  </div>
+  <div *ngIf=" wrongLogin" class="alert alert-badReg">
+    Подьзователь с таким логином уже зарегистрирован
+  </div>
+<div class="btn-block">
   <button type="submit" class="btn" [disabled]="form.invalid">Регистрировать</button>
+</div>
+  
 </form>
