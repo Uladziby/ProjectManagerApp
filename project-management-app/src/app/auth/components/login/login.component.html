@@ -3,17 +3,24 @@
     Вход
   </h2>
 
+
   <div class="form-control">
-    <label>Логин:</label>
-    <input type="text" formControlName="login">
+    <div class="input-block">
+      <div>Логин:</div>
+      <input type="text" formControlName="login">
+    </div>
+
     <div class="valid" *ngIf="form.get('login')?.touched && form.get('login')?.invalid">
       Поле не может быть пустым
     </div>
   </div>
 
   <div class="form-control">
-    <label>Пароль:</label>
-    <input type="password" formControlName="password">
+    <div class="input-block">
+      <div>Пароль:</div>
+      <input type="password" formControlName="password">
+    </div>
+
     <div class="valid" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
       <span *ngIf="form.get('password')?.errors?.['required']">Поле не может быть пустым.</span>
       <span *ngIf="!form.get('password')?.errors?.['required']">Минимальныя длина пароля
@@ -21,10 +28,20 @@
         символа.</span>
     </div>
   </div>
+  <div class="msg-block">
+    <div *ngIf=" form.invalid" class="alert">
+      Для входа все поля должны быть заполненны.
+    </div>
 
-  <div *ngIf=" form.invalid" class="alert">
-    Для входа все поля должны быть заполненны.
+    <div *ngIf=" !form.invalid&&notFound" class="notFound">
+      Пользователь с таким логином и паролем не найден
+    </div>
   </div>
 
-  <button type="submit" class="btn" [disabled]="form.invalid">Submit</button>
+  <div class="btn-block">
+    <button type="submit" class="btn" [disabled]="form.invalid || form.disabled">Submit</button>
+  </div>
+
+
+  
 </form>

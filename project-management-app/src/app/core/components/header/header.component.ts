@@ -4,6 +4,8 @@ import { RouteEnum } from 'src/app/shared/interfaces/enums';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { CreationModalComponent } from '../../modal/creation-modal/creation-modal.component';
+import { StateService } from 'src/app/shared/services/state.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +19,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isLogin: boolean = false;
   public navbarFixed: boolean = false;
 
-  constructor(public matDialog: MatDialog, private boardService: BoardService, private router : Router) {
+  constructor(
+    public matDialog: MatDialog,
+    private boardService: BoardService,
+    private router: Router,
+    public state: StateService,
+    public auth: AuthService
+  ) {
     localStorage.setItem('user', 'yes');
   }
 
@@ -31,8 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onCheckLogin() {
-    const user = localStorage.getItem('user');
-    user ? (this.isLogin = true) : (this.isLogin = false);
+    return this.auth.isAuth();
   }
 
   OnChangeLang(): void {
@@ -48,14 +55,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   OnLogout(): void {
     this.router.navigate([RouteEnum.start])
-    localStorage.clear();
-    this.onCheckLogin();
+    this.auth.logout();
   }
-
-  OnSignUp(): void{
+  editProfile() {
+    this.router.navigate([RouteEnum.editProfile])
+  }
+  OnSignUp(): void {
     this.router.navigate([RouteEnum.signup])
   }
-  
+
   newBoard() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;

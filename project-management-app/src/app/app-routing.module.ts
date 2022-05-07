@@ -8,7 +8,7 @@ import { NotFoundComponent } from './core/pages/not-found/not-found.component';
 const routes: Routes = [
   {
     path: '',
-    component : NotFoundComponent,
+    component: NotFoundComponent,
     canActivate: [AuthGuard],
     canLoad: [AuthGuard],
   },
@@ -18,6 +18,10 @@ const routes: Routes = [
   },
   {
     path: RouteEnum.signup,
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: RouteEnum.editProfile,
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {

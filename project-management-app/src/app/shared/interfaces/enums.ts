@@ -2,7 +2,8 @@ export enum RouteEnum {
     start = '',
     login = 'login',
     signup = 'signup',
-    boards ='boards',
+    boards = 'boards',
     notFound = "404",
-    
+    editProfile = "editProfile"
+
 }
