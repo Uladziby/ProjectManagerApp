@@ -1,11 +1,11 @@
 <header (scroll)="onScroll()">
   <mat-toolbar layout="row" color="accent" [ngClass]="navbarFixed ? 'fixed' : 'nofixed'">
     <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
-      {{ this.lang }}
+      {{ this.lang$ | async }}
     </mat-slide-toggle>
     <button mat-button color="primary" [disabled]="!this.isLogin" (click)="newBoard()">
       <mat-icon> add </mat-icon>
-      Create new board
+      {{headerText.create}}
     </button>
     <mat-accordion *ngIf="onCheckLogin()">
       <mat-expansion-panel role="button" color="accent" class="user_menu" (opened)="panelOpenState = true"
@@ -21,7 +21,7 @@
         <button class="btn_menu" mat-flat-button (click)="editProfile()">Edit
           profile</button>
         <button class="btn_menu" mat-flat-button (click)="OnLogout()">
-          Logout
+          {{headerText.logout}}
         </button>
       </mat-expansion-panel>
     </mat-accordion>

@@ -19,6 +19,8 @@ import { ApproveModalComponent } from './modal/approve-modal/approve-modal.compo
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CreationModalComponent } from './modal/creation-modal/creation-modal.component';
+import { TOKEN_INTERCEPTOR } from '../shared/services/token.interceptor';
+import { WelcomeComponent } from './pages/welcome/welcome.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -39,6 +41,7 @@ const materialModules = [
     ModalComponent,
     ApproveModalComponent,
     CreationModalComponent,
+    WelcomeComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +52,7 @@ const materialModules = [
     OverlayModule,
     MatDialogModule,
   ],
+  providers: [TOKEN_INTERCEPTOR],
   exports: [
     HeaderComponent,
     FooterComponent,

@@ -4,11 +4,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './core/pages/not-found/not-found.component';
+import { WelcomeComponent } from './core/pages/welcome/welcome.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: NotFoundComponent,
+    component: WelcomeComponent,
     canActivate: [AuthGuard],
     canLoad: [AuthGuard],
   },
@@ -26,15 +27,15 @@ const routes: Routes = [
   },
   {
     path: RouteEnum.boards,
-    loadChildren: () => import('./board/board.module').then((m) => m.BoardModule),
+    loadChildren: () =>
+      import('./board/board.module').then((m) => m.BoardModule),
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },
 ];
 
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
