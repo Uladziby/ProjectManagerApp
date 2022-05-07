@@ -1,35 +1,25 @@
 <header (scroll)="onScroll()">
-  <mat-toolbar
-    layout="row"
-    color="accent"
-    [ngClass]="navbarFixed ? 'fixed' : 'nofixed'"
-  >
+  <mat-toolbar layout="row" color="accent" [ngClass]="navbarFixed ? 'fixed' : 'nofixed'">
     <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
-      {{ this.lang }}
+      {{ this.lang$ | async }}
     </mat-slide-toggle>
     <button mat-button color="primary" [disabled]="!this.isLogin" (click)="newBoard()">
       <mat-icon> add </mat-icon>
-      Create new board
+      {{headerText.create}}
     </button>
     <mat-accordion *ngIf="this.isLogin">
-      <mat-expansion-panel
-        role="button"
-        color="accent"
-        class="user_menu"
-        (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false"
-      >
+      <mat-expansion-panel role="button" color="accent" class="user_menu" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
           <mat-panel-title color="primary">
             <button mat-mini-fab color="primary">
               <mat-icon> person </mat-icon>
             </button>
-            <span class="name_user"> Hello, User </span>
+            <span class="name_user"> {{headerText.hello}} User </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <button class="btn_menu" mat-flat-button>Edit profile</button>
+        <button class="btn_menu" mat-flat-button>{{headerText.edit}}</button>
         <button class="btn_menu" mat-flat-button (click)="OnLogout()">
-          Logout
+          {{headerText.logout}}
         </button>
       </mat-expansion-panel>
     </mat-accordion>

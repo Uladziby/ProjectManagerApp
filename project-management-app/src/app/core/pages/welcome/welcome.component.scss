@@ -1,0 +1,25 @@
+#title-section {
+  text-align: center;
+}
+
+#team-section-title {
+  margin-top: 40px;
+}
+
+#team-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.team-section-card {
+  background-color: #b0bec5;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 40px;
+}
+
+.team-section-card:nth-child(2n) {
+  margin-top: 40px;
+  margin-bottom: 0px;
+}

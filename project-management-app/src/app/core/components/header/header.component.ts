@@ -4,6 +4,9 @@ import { RouteEnum } from 'src/app/shared/interfaces/enums';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { CreationModalComponent } from '../../modal/creation-modal/creation-modal.component';
+import { LangType } from 'src/app/shared/interfaces/lang';
+import { LangService } from 'src/app/shared/services/lang.service';
+import { TRANSLATE } from 'src/app/shared/consts/translate';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +15,18 @@ import { CreationModalComponent } from '../../modal/creation-modal/creation-moda
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   public slideToggle: boolean = false;
-  public lang: string = 'English';
+  public lang$ = this.langService.lang$;
   public panelOpenState = false;
   public isLogin: boolean = false;
   public navbarFixed: boolean = false;
+  headerText = TRANSLATE.en.header;
 
-  constructor(public matDialog: MatDialog, private boardService: BoardService, private router : Router) {
+  constructor(
+    public matDialog: MatDialog,
+    private boardService: BoardService,
+    private router: Router,
+    private langService: LangService
+  ) {
     localStorage.setItem('user', 'yes');
   }
 
@@ -36,26 +45,34 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   OnChangeLang(): void {
-    this.slideToggle === true
-      ? (this.lang = 'Русский')
-      : (this.lang = 'English');
+    if (this.slideToggle === true) {
+      this.langService.changeLang('Русский');
+      this.headerText = TRANSLATE.ru.header;
+    } else {
+      this.langService.changeLang('English');
+      this.headerText = TRANSLATE.en.header;
+    }
+
+    // this.slideToggle === true
+    //   ? (this.lang = 'Русский')
+    //   : (this.lang = 'English');
   }
 
   OnLogin(): void {
-    this.router.navigate([RouteEnum.login])
+    this.router.navigate([RouteEnum.login]);
     this.onCheckLogin();
   }
 
   OnLogout(): void {
-    this.router.navigate([RouteEnum.start])
+    this.router.navigate([RouteEnum.start]);
     localStorage.clear();
     this.onCheckLogin();
   }
 
-  OnSignUp(): void{
-    this.router.navigate([RouteEnum.signup])
+  OnSignUp(): void {
+    this.router.navigate([RouteEnum.signup]);
   }
-  
+
   newBoard() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
