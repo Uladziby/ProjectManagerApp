@@ -3,8 +3,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { BoardService } from 'src/app/shared/services/board.service';
+import { IUser, IUserSignIn } from 'src/app/shared/interfaces/interfaces';
+import { StateService } from 'src/app/shared/services/state.service';
 
 
 @Component({
@@ -17,7 +20,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   aSab: Subscription | undefined;
   notFound = false;
 
-  constructor(private authService: AuthService, private router: Router, private board:BoardService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private board: BoardService,
+    private state: StateService
+  ) {
 
     this.form = new FormGroup({
 
@@ -40,15 +48,22 @@ export class LoginComponent implements OnInit, OnDestroy {
   signin() {
     this.form.disable();
     const user = this.form.value
-    console.log(user);
+
 
     this.aSab = this.authService.signIn(user).subscribe(
       () => {
-      //переход на main rout
-        //this.router.navigate(['/main']) 
+        this.authService.getUsers().pipe(
+          tap(
+            (array: IUser[]) => {
+              const currUser = array.find(el => el.login === user.login) as IUser;
+              this.state.updateState(currUser, user.password)
+            }
+          )
+        ).subscribe();
+        this.router.navigate(['/boards'])
       },
       () => {
-       
+
         this.notFound = true;
         this.form.enable();
         setTimeout(() => {
@@ -56,7 +71,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         }, 3000)
       }
     );
-   
+
   }
-  
+
 }

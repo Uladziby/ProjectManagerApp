@@ -15,7 +15,12 @@ import {
 })
 export class AuthService {
   token: string | null = null;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      this.setToken(token);
+    }
+  }
 
 
   getUsers(): Observable<IUser[]> {
@@ -34,7 +39,7 @@ export class AuthService {
   }
 
   changeUser(id: string, info: IUserInfo): Observable<IUser> {
-    const req = `${BASIC_URL}/users${id}`;
+    const req = `${BASIC_URL}/users/${id}`;
     return this.http.put<IUser>(req, info);
   }
 
@@ -56,7 +61,7 @@ export class AuthService {
     return this.http.post<IUserInfo>(req, info);
   }
 
-  setToken(token: string|null) {
+  setToken(token: string | null) {
     this.token = token;
   }
 
@@ -67,8 +72,8 @@ export class AuthService {
   isAuth(): boolean {
     return !!this.token;
   }
-  logout(){
+  logout() {
     this.setToken(null);
-    localStorage.removeItem('userToken');
+    localStorage.clear();
   }
 }
