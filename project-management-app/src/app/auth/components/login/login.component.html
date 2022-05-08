@@ -4,31 +4,32 @@
   </h2>
 
 
-  <div class="form-control">
-    <div class="input-block">
-      <div>Логин:</div>
-      <input type="text" formControlName="login">
-    </div>
-
-    <div class="valid" *ngIf="form.get('login')?.touched && form.get('login')?.invalid">
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Логин</mat-label>
+    <input type="text" matInput formControlName="login" placeholder="Логин">
+    <mat-error *ngIf="form.get('login')?.touched && form.get('login')?.invalid">
       Поле не может быть пустым
-    </div>
-  </div>
+    </mat-error>
 
-  <div class="form-control">
-    <div class="input-block">
-      <div>Пароль:</div>
-      <input type="password" formControlName="password">
-    </div>
+  </mat-form-field>
 
-    <div class="valid" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
-      <span *ngIf="form.get('password')?.errors?.['required']">Поле не может быть пустым.</span>
-      <span *ngIf="!form.get('password')?.errors?.['required']">Минимальныя длина пароля
-        {{form.get('password')?.errors?.['minlength']?.['requiredLength']}}
-        символа.</span>
-    </div>
-  </div>
-  <div class="msg-block">
+
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>Пароль:</mat-label>
+    <input type="password" matInput formControlName="password" placeholder="pass">
+    <mat-error *ngIf="form.get('password')?.errors?.['required']">
+      Поле не может быть пустым
+    </mat-error>
+    <mat-error *ngIf="!form.get('password')?.errors?.['required']">
+      Минимальныя длина пароля
+      {{form.get('password')?.errors?.['minlength']?.['requiredLength']}}
+      символа.
+    </mat-error>
+  </mat-form-field>
+
+
+
+  <div class="msg-block" *ngIf=" form.invalid||notFound">
     <div *ngIf=" form.invalid" class="alert">
       Для входа все поля должны быть заполненны.
     </div>
@@ -38,10 +39,11 @@
     </div>
   </div>
 
-  <div class="btn-block">
-    <button type="submit" class="btn" [disabled]="form.invalid || form.disabled">Submit</button>
+  <div class="btn-block" *ngIf=" !(form.invalid||notFound)">
+    <button type="submit" mat-raised-button color="primary" class="btn"
+      [disabled]="form.invalid || form.disabled">Submit</button>
   </div>
 
 
-  
+
 </form>

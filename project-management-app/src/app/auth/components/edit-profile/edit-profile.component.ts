@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { StateService } from 'src/app/shared/services/state.service';
-
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ApproveModalComponent } from 'src/app/core/modal/approve-modal/approve-modal.component';
 
 @Component({
   selector: 'app-edit-profile',
@@ -25,7 +26,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private state: StateService,
-
+    public matDialog: MatDialog
 
   ) {
 
@@ -90,33 +91,28 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   deleteProfile() {
 
     this.form.disable();
-    const ans = confirm('Удалить профиль?')
-    if (ans) {
-      this.regSab = this.authService.deleteUser(this.state.user.id,).subscribe(
-        () => {
-          this.authService.logout();
 
-          this.router.navigate(['/login'])
-        },
-        (err) => {
+    this.regSab = this.authService.deleteUser(this.state.user.id,).subscribe(
+      () => {
+        this.authService.logout();
 
-          if (err.status === 409) {
-            this.wrongLogin = true;
-          } else {
-            this.badReg = true;
-          }
+        this.router.navigate(['/login'])
+      },
+      (err) => {
 
-          this.form.enable();
-          setTimeout(() => {
-            this.badReg = false;
-            this.wrongLogin = false;
-          }, 3000)
+        if (err.status === 409) {
+          this.wrongLogin = true;
+        } else {
+          this.badReg = true;
         }
-      );
-    }
 
-
-
+        this.form.enable();
+        setTimeout(() => {
+          this.badReg = false;
+          this.wrongLogin = false;
+        }, 3000)
+      }
+    );
   }
 
 
@@ -132,6 +128,22 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       return a(pass);
     }
     return null;
+  }
+  openApproveModal() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-approve-component';
+    dialogConfig.height = '150px';
+    dialogConfig.width = '400px';
+    const modalDialog = this.matDialog.open(
+      ApproveModalComponent,
+      dialogConfig
+    );
+    modalDialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteProfile()
+      }
+    });
   }
 
 }
