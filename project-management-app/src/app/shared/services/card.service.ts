@@ -23,7 +23,7 @@ export class CardService {
     return this.http.get<IColumn>(req);
   }
 
-  createCard(boardId: string, body: IColumnCreation) {
+  createColumn(boardId: string, body: IColumnCreation) {
     const req = `${BASIC_URL}/boards/${boardId}/columns`;
     return this.http.post<IColumns>(req, body);
   }

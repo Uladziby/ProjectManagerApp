@@ -1,0 +1,90 @@
+<div class="board-header">
+  <a mat-button color="accent" (click)="onBack()">
+    <mat-icon>arrow_back_ios_icon</mat-icon>
+    <span>BACK</span>
+  </a>
+  <button mat-button (click)="onCreateColumn()">
+    <mat-icon>table_chart_icon</mat-icon>
+    <span>ADD COLUMN</span>
+  </button>
+</div>
+<div class="columns" cdkDropListGroup>
+  <mat-grid-list
+    *ngFor="let column of this.columns.columns"
+    cols="1"
+    rowHeight="130px"
+    glutterSize="1px"
+    [cdkDropListData]="column.tasks"
+    cdkDropList
+    class="tasks_list"
+  >
+    <mat-grid-tile-header class="task_list-header">TODO</mat-grid-tile-header>
+    <mat-grid-tile cdkDrag *ngFor="let task of this.dataBoard.tasks">
+      <mat-card class="task">
+        <mat-card-header>
+          {{ task.title }}
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" id="task_menu">
+            <button mat-menu-item (click)="OnDeleteTask()">
+              <mat-icon>delete</mat-icon>
+              <span>delete task</span>
+            </button>
+            <button mat-menu-item (click)="OnEditTask()">
+              <mat-icon>edit</mat-icon>
+              <span>edit task</span>
+            </button>
+          </mat-menu>
+        </mat-card-header>
+        <mat-card-content>
+          {{ task.description }}
+        </mat-card-content>
+        <mat-card-footer> </mat-card-footer>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list
+    *ngFor="let column of this.columns.columns"
+    cols="1"
+    rowHeight="130px"
+    glutterSize="1px"
+    (cdkDropListDropped)="drop($event)"
+    cdkDropList
+    class="tasks_list"
+  >
+    <mat-grid-tile-header class="task_list-header">TODO</mat-grid-tile-header>
+    <mat-grid-tile cdkDrag *ngFor="let task of this.dataBoard.tasks">
+      <mat-card class="task">
+        <mat-card-header>
+          {{ task.title }}
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" id="task_menu">
+            <button mat-menu-item (click)="OnDeleteTask()">
+              <mat-icon>delete</mat-icon>
+              <span>delete task</span>
+            </button>
+            <button mat-menu-item (click)="OnEditTask()">
+              <mat-icon>edit</mat-icon>
+              <span>edit task</span>
+            </button>
+          </mat-menu>
+        </mat-card-header>
+        <mat-card-content>
+          {{ task.description }}
+        </mat-card-content>
+        <mat-card-footer> </mat-card-footer>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

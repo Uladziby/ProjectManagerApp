@@ -30,6 +30,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./board/board.module').then((m) => m.BoardModule),
   },
+  {
+    path: RouteEnum.board,
+    loadChildren: () =>
+      import('./board-route/board-route.module').then((m) => m.BoardRouteModule),
+  },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },
 ];
