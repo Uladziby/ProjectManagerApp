@@ -28,8 +28,8 @@ export class RegistrarionComponent implements OnInit, OnDestroy {
   ) {
     this.pass = new FormGroup({
       password: new FormControl('', [Validators.minLength(4), Validators.required]),
-      passwordConfirm: new FormControl('', [Validators.minLength(4), Validators.required]),
-    }, this.checkPassEqual.bind(this))
+      passwordConfirm: new FormControl('', [Validators.minLength(4), Validators.required, this.checkPassEqual.bind(this)]),
+    })
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       login: new FormControl('', [Validators.required]),

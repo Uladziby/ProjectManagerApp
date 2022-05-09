@@ -31,21 +31,19 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   ) {
 
     this.pass = new FormGroup({
-      password: new FormControl('', [Validators.minLength(4), Validators.required]),
-      passwordConfirm: new FormControl('', [Validators.minLength(4), Validators.required]),
+      password: new FormControl(this.state.userPass, [Validators.minLength(4), Validators.required]),
+      passwordConfirm: new FormControl(this.state.userPass, [Validators.minLength(4), Validators.required]),
     }, this.checkPassEqual.bind(this))
     this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      login: new FormControl('', [Validators.required]),
+      name: new FormControl(this.state.user.name, [Validators.required]),
+      login: new FormControl({ value: this.state.user.login, disabled: true }, Validators.required),
       passwordGRoup: this.pass
     })
   }
 
   ngOnInit(): void {
-    this.form.controls['name'].setValue(this.state.user.name);
-    this.form.controls['login'].setValue(this.state.user.login);
-    this.pass.controls['password'].setValue(this.state.userPass);
-    this.pass.controls['passwordConfirm'].setValue(this.state.userPass);
+    this.form.controls['login'].disable();
+
   }
   ngOnDestroy(): void {
     if (this.authSab) {
@@ -57,19 +55,18 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   updateUser() {
-    const { name, login } = this.form.value;
+    let { name, login } = this.form.value;
+    login = this.state.user.login;
     const { password, passwordConfirm } = this.pass.value;
     const newUser = { name, login, password };
 
 
     this.form.disable();
 
-    console.log(newUser);
-
     this.regSab = this.authService.changeUser(this.state.user.id, newUser).subscribe(
       (user) => {
         this.state.updateState(user, password)
-
+        this.form.enable();
       },
       (err) => {
 
