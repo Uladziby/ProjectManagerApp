@@ -11,6 +11,17 @@ export const TRANSLATE = {
       edit: 'Редактировать профиль',
       logout: 'Выйти',
     },
+    modal: {
+      ok: 'Ок',
+      cancel: 'Отмена',
+      empty: 'Поле не должно быть пустым',
+      action: 'Подтвердите действие на странице',
+    },
+    createBoard: {
+      task: 'Введите заголовок доски',
+      title: 'Моя новая доска',
+      description: 'Описание доски',
+    },
   },
   en: {
     welcome: {
@@ -23,6 +34,17 @@ export const TRANSLATE = {
       hello: 'Hello,',
       edit: 'Edit profile',
       logout: 'Logout',
+    },
+    modal: {
+      ok: 'Ok',
+      cancel: 'Cancel',
+      empty: 'This field should not be empty',
+      action: 'Confirm action',
+    },
+    createBoard: {
+      task: 'Enter a new board title',
+      title: 'New Board',
+      description: 'Description of the board',
     },
   },
 };
