@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { StateService } from 'src/app/shared/services/state.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ApproveModalComponent } from 'src/app/core/modal/approve-modal/approve-modal.component';
+import { TRANSLATE } from 'src/app/shared/consts/translate';
+import { LangService } from 'src/app/shared/services/lang.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -26,13 +28,14 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private state: StateService,
-    public matDialog: MatDialog
+    public matDialog: MatDialog,
+    private langService: LangService
 
   ) {
 
     this.pass = new FormGroup({
-      password: new FormControl(this.state.userPass, [Validators.minLength(4), Validators.required]),
-      passwordConfirm: new FormControl(this.state.userPass, [Validators.minLength(4), Validators.required]),
+      password: new FormControl(this.state.userPass, [Validators.minLength(4), Validators.required, this.checkPassEqual.bind(this)]),
+      passwordConfirm: new FormControl(this.state.userPass, [Validators.minLength(4), Validators.required, this.checkPassEqual.bind(this)]),
     }, this.checkPassEqual.bind(this))
     this.form = new FormGroup({
       name: new FormControl(this.state.user.name, [Validators.required]),
@@ -41,8 +44,15 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     })
   }
 
+  private subs!: Subscription;
+  text = TRANSLATE.en.profile;
+
   ngOnInit(): void {
     this.form.controls['login'].disable();
+    this.subs = this.langService.lang$.subscribe((lang) => {
+      this.text =
+        lang === 'English' ? TRANSLATE.en.profile : TRANSLATE.ru.profile;
+    });
 
   }
   ngOnDestroy(): void {
@@ -51,6 +61,9 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     }
     if (this.regSab) {
       this.regSab.unsubscribe()
+    }
+    if (this.subs) {
+      this.subs.unsubscribe();
     }
   }
 

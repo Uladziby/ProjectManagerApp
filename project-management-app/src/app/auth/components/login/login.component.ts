@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { IUser, IUserSignIn } from 'src/app/shared/interfaces/interfaces';
 import { StateService } from 'src/app/shared/services/state.service';
-
+import { TRANSLATE } from 'src/app/shared/consts/translate';
+import { LangService } from 'src/app/shared/services/lang.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private board: BoardService,
-    private state: StateService
+    private state: StateService,
+    private langService: LangService
   ) {
 
     this.form = new FormGroup({
@@ -35,13 +37,24 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit(): void {
+  private subs!: Subscription;
+  text = TRANSLATE.en.login;
 
+  ngOnInit(): void {
+    this.subs = this.langService.lang$.subscribe((lang) => {
+      this.text =
+        lang === 'English' ? TRANSLATE.en.login : TRANSLATE.ru.login;
+    });
   }
+
+
 
   ngOnDestroy(): void {
     if (this.aSab) {
-      this.aSab.unsubscribe()
+      this.aSab.unsubscribe();
+    }
+    if (this.subs) {
+      this.subs.unsubscribe();
     }
   }
 

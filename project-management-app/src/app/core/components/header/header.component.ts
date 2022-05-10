@@ -4,7 +4,6 @@ import { RouteEnum } from 'src/app/shared/interfaces/enums';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { CreationModalComponent } from '../../modal/creation-modal/creation-modal.component';
-import { LangType } from 'src/app/shared/interfaces/lang';
 import { LangService } from 'src/app/shared/services/lang.service';
 import { TRANSLATE } from 'src/app/shared/consts/translate';
 import { StateService } from 'src/app/shared/services/state.service';

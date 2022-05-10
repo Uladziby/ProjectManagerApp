@@ -12,13 +12,14 @@ margin-bottom: 7px;
 
 .msg-block{
   height: 2.5em;
-  display: flex;
-  align-items: center;
   text-align: center;
   padding: 10px 5px;
 }
 .notFound{
   color: rgb(177, 5, 5);
+}
+.alert{
+  text-align: center;
 }
 
 .btn-block{

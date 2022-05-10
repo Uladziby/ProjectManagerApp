@@ -7,6 +7,8 @@ import { RouteEnum } from 'src/app/shared/interfaces/enums';
 import { IUser } from 'src/app/shared/interfaces/interfaces';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { StateService } from 'src/app/shared/services/state.service';
+import { TRANSLATE } from 'src/app/shared/consts/translate';
+import { LangService } from 'src/app/shared/services/lang.service';
 
 @Component({
   selector: 'app-registrarion',
@@ -21,10 +23,12 @@ export class RegistrarionComponent implements OnInit, OnDestroy {
   badReg = false;
   sucsess = false;
   wrongLogin = false;
+
   constructor(
     private router: Router,
     private authService: AuthService,
-    private state: StateService
+    private state: StateService,
+    private langService: LangService
   ) {
     this.pass = new FormGroup({
       password: new FormControl('', [Validators.minLength(4), Validators.required]),
@@ -37,9 +41,14 @@ export class RegistrarionComponent implements OnInit, OnDestroy {
     })
 
   }
+  private subs!: Subscription;
+  text = TRANSLATE.en.profile;
 
   ngOnInit(): void {
-
+    this.subs = this.langService.lang$.subscribe((lang) => {
+      this.text =
+        lang === 'English' ? TRANSLATE.en.profile : TRANSLATE.ru.profile;
+    });
   }
   ngOnDestroy(): void {
     if (this.authSab) {
@@ -47,6 +56,9 @@ export class RegistrarionComponent implements OnInit, OnDestroy {
     }
     if (this.regSab) {
       this.regSab.unsubscribe()
+    }
+    if (this.subs) {
+      this.subs.unsubscribe();
     }
   }
 
