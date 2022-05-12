@@ -22,6 +22,9 @@ export const TRANSLATE = {
       title: 'Моя новая доска',
       description: 'Описание доски',
     },
+    boards: {
+      title: 'Мои доски',
+    },
   },
   en: {
     welcome: {
@@ -45,6 +48,9 @@ export const TRANSLATE = {
       task: 'Enter a new board title',
       title: 'New Board',
       description: 'Description of the board',
+    },
+    boards: {
+      title: 'My boards',
     },
   },
 };
