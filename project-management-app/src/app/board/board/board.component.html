@@ -1,4 +1,4 @@
-<a [routerLink]="(board$ | async)?.id">
+<a [routerLink]="['/board', (board$ | async)?.id]">
   <div class="board">
     <h4>{{(board$ | async)?.title}}</h4>
 

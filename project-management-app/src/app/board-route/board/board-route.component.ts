@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { TaskService } from './../../shared/services/task.service';
 import {
   IBoard,
@@ -13,7 +14,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { RouteEnum } from 'src/app/shared/interfaces/enums';
 
 @Component({
@@ -22,6 +23,7 @@ import { RouteEnum } from 'src/app/shared/interfaces/enums';
   styleUrls: ['./board-route.component.scss'],
 })
 export class BoardRouteComponent implements OnInit {
+  public subscription!: Subscription;
   public columns$!: IColumn[];
   public currentIdBoard!: string;
   public connectedTo: string[] = [];
@@ -30,11 +32,14 @@ export class BoardRouteComponent implements OnInit {
     private boardService: BoardService,
     private cardService: CardService,
     private taskService: TaskService,
-    private router: Router
+    private router: Router,
+    private activateRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.currentIdBoard = '780e9390-43cc-4035-9f3e-caf60b5225ec';
+    this.subscription = this.activateRoute.params.subscribe(
+      (params) => (this.currentIdBoard = params['id'])
+    );
     this.boardService.getBoard(this.currentIdBoard).subscribe((val) => {
       this.columns$ = val.columns;
       for (let item of this.columns$) {

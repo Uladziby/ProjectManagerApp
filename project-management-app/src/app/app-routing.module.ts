@@ -31,7 +31,7 @@ const routes: Routes = [
       import('./board/board.module').then((m) => m.BoardModule),
   },
   {
-    path: RouteEnum.board,
+    path: RouteEnum.board+'/:id',
     loadChildren: () =>
       import('./board-route/board-route.module').then((m) => m.BoardRouteModule),
   },
