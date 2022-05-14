@@ -41,7 +41,7 @@ export const TRANSLATE = {
       btnReg: 'Зарегистрировать',
       btnEdit: 'Изменить',
       btnDelete: 'Удалить профиль',
-      name: 'Имя',}
+      name: 'Имя',},
     modal: {
       ok: 'Ок',
       cancel: 'Отмена',
@@ -99,7 +99,7 @@ export const TRANSLATE = {
       btnReg: 'Create',
       btnEdit: 'Edit',
       btnDelete: 'Delete profile',
-      name: 'Name',}
+      name: 'Name',},
       
     modal: {
       ok: 'Ok',
