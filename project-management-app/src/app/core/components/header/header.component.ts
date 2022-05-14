@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public isLogin: boolean = false;
   public navbarFixed: boolean = false;
   headerText = TRANSLATE.en.header;
+  modalText = TRANSLATE.en.createBoard;
 
   constructor(
     public matDialog: MatDialog,
@@ -50,9 +51,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.slideToggle === true) {
       this.langService.changeLang('Русский');
       this.headerText = TRANSLATE.ru.header;
+      this.modalText = TRANSLATE.ru.createBoard;
     } else {
       this.langService.changeLang('English');
       this.headerText = TRANSLATE.en.header;
+      this.modalText = TRANSLATE.en.createBoard;
     }
 
     // this.slideToggle === true
@@ -66,14 +69,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   OnLogout(): void {
-    this.router.navigate([RouteEnum.start])
+    this.router.navigate([RouteEnum.start]);
     this.auth.logout();
   }
   editProfile() {
-    this.router.navigate([RouteEnum.editProfile])
+    this.router.navigate([RouteEnum.editProfile]);
   }
   OnSignUp(): void {
-    this.router.navigate([RouteEnum.signup])
+    this.router.navigate([RouteEnum.signup]);
   }
 
   newBoard() {
@@ -82,7 +85,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     dialogConfig.id = 'modal-approve-component';
     dialogConfig.height = '300px';
     dialogConfig.width = '400px';
-    dialogConfig.data = { task: 'Enter a new board title', title: 'New Board' };
+    dialogConfig.data = this.modalText;
     const modalDialog = this.matDialog.open(
       CreationModalComponent,
       dialogConfig
@@ -90,9 +93,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     modalDialog.afterClosed().subscribe((result) => {
       console.log(result);
       if (result) {
-        this.boardService.createBoard(result).subscribe((result) => {
-          console.log('new board', result);
-        });
+        this.boardService
+          .createBoard(result.title, result.description)
+          .subscribe(() => {});
       }
     });
   }

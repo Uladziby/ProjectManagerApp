@@ -21,7 +21,6 @@ export const TRANSLATE = {
       warMsgNotFound: 'Пользователь с таким логином и паролем не найден',
       warMsgRequire: 'Поле не может быть пустым',
       btn: 'Войти',
-
     },
     profile: {
       titleReg: 'Создать профиль',
@@ -42,7 +41,20 @@ export const TRANSLATE = {
       btnReg: 'Зарегистрировать',
       btnEdit: 'Изменить',
       btnDelete: 'Удалить профиль',
-      name: 'Имя',
+      name: 'Имя',}
+    modal: {
+      ok: 'Ок',
+      cancel: 'Отмена',
+      empty: 'Поле не должно быть пустым',
+      action: 'Подтвердите действие на странице',
+    },
+    createBoard: {
+      task: 'Введите заголовок доски',
+      title: 'Моя новая доска',
+      description: 'Описание доски',
+    },
+    boards: {
+      title: 'Мои доски',
     },
   },
   en: {
@@ -87,7 +99,21 @@ export const TRANSLATE = {
       btnReg: 'Create',
       btnEdit: 'Edit',
       btnDelete: 'Delete profile',
-      name: 'Name',
+      name: 'Name',}
+      
+    modal: {
+      ok: 'Ok',
+      cancel: 'Cancel',
+      empty: 'This field should not be empty',
+      action: 'Confirm action',
+    },
+    createBoard: {
+      task: 'Enter a new board title',
+      title: 'New Board',
+      description: 'Description of the board',
+    },
+    boards: {
+      title: 'My boards',
     },
   },
 };

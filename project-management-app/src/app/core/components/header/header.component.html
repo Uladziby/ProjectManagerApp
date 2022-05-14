@@ -3,13 +3,12 @@
     <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
       {{ this.lang$ | async }}
     </mat-slide-toggle>
-    <button mat-button color="primary" [disabled]="!this.isLogin" (click)="newBoard()">
+    <button mat-button color="primary" [disabled]="!onCheckLogin()" (click)="newBoard()">
       <mat-icon> add </mat-icon>
       {{headerText.create}}
     </button>
     <mat-accordion *ngIf="onCheckLogin()">
-      <mat-expansion-panel role="button" color="accent" class="user_menu" (opened)="panelOpenState = true"
-        (closed)="panelOpenState = false">
+      <mat-expansion-panel role="button" color="accent" class="user_menu" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
           <mat-panel-title color="primary">
             <button mat-mini-fab color="primary">
