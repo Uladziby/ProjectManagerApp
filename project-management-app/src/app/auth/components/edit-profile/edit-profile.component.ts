@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { StateService } from 'src/app/shared/services/state.service';
-
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ApproveModalComponent } from 'src/app/core/modal/approve-modal/approve-modal.component';
+import { TRANSLATE } from 'src/app/shared/consts/translate';
+import { LangService } from 'src/app/shared/services/lang.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -25,26 +28,32 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private state: StateService,
-
+    public matDialog: MatDialog,
+    private langService: LangService
 
   ) {
 
     this.pass = new FormGroup({
-      password: new FormControl('', [Validators.minLength(4), Validators.required]),
-      passwordConfirm: new FormControl('', [Validators.minLength(4), Validators.required]),
+      password: new FormControl(this.state.userPass, [Validators.minLength(4), Validators.required, this.checkPassEqual.bind(this)]),
+      passwordConfirm: new FormControl(this.state.userPass, [Validators.minLength(4), Validators.required, this.checkPassEqual.bind(this)]),
     }, this.checkPassEqual.bind(this))
     this.form = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      login: new FormControl('', [Validators.required]),
+      name: new FormControl(this.state.user.name, [Validators.required]),
+      login: new FormControl({ value: this.state.user.login, disabled: true }, Validators.required),
       passwordGRoup: this.pass
     })
   }
 
+  private subs!: Subscription;
+  text = TRANSLATE.en.profile;
+
   ngOnInit(): void {
-    this.form.controls['name'].setValue(this.state.user.name);
-    this.form.controls['login'].setValue(this.state.user.login);
-    this.pass.controls['password'].setValue(this.state.userPass);
-    this.pass.controls['passwordConfirm'].setValue(this.state.userPass);
+    this.form.controls['login'].disable();
+    this.subs = this.langService.lang$.subscribe((lang) => {
+      this.text =
+        lang === 'English' ? TRANSLATE.en.profile : TRANSLATE.ru.profile;
+    });
+
   }
   ngOnDestroy(): void {
     if (this.authSab) {
@@ -53,22 +62,24 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     if (this.regSab) {
       this.regSab.unsubscribe()
     }
+    if (this.subs) {
+      this.subs.unsubscribe();
+    }
   }
 
   updateUser() {
-    const { name, login } = this.form.value;
+    let { name, login } = this.form.value;
+    login = this.state.user.login;
     const { password, passwordConfirm } = this.pass.value;
     const newUser = { name, login, password };
 
 
     this.form.disable();
 
-    console.log(newUser);
-
     this.regSab = this.authService.changeUser(this.state.user.id, newUser).subscribe(
       (user) => {
         this.state.updateState(user, password)
-
+        this.form.enable();
       },
       (err) => {
 
@@ -90,33 +101,28 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   deleteProfile() {
 
     this.form.disable();
-    const ans = confirm('Удалить профиль?')
-    if (ans) {
-      this.regSab = this.authService.deleteUser(this.state.user.id,).subscribe(
-        () => {
-          this.authService.logout();
 
-          this.router.navigate(['/login'])
-        },
-        (err) => {
+    this.regSab = this.authService.deleteUser(this.state.user.id,).subscribe(
+      () => {
+        this.authService.logout();
 
-          if (err.status === 409) {
-            this.wrongLogin = true;
-          } else {
-            this.badReg = true;
-          }
+        this.router.navigate(['/login'])
+      },
+      (err) => {
 
-          this.form.enable();
-          setTimeout(() => {
-            this.badReg = false;
-            this.wrongLogin = false;
-          }, 3000)
+        if (err.status === 409) {
+          this.wrongLogin = true;
+        } else {
+          this.badReg = true;
         }
-      );
-    }
 
-
-
+        this.form.enable();
+        setTimeout(() => {
+          this.badReg = false;
+          this.wrongLogin = false;
+        }, 3000)
+      }
+    );
   }
 
 
@@ -132,6 +138,22 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       return a(pass);
     }
     return null;
+  }
+  openApproveModal() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-approve-component';
+    dialogConfig.height = '150px';
+    dialogConfig.width = '400px';
+    const modalDialog = this.matDialog.open(
+      ApproveModalComponent,
+      dialogConfig
+    );
+    modalDialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteProfile()
+      }
+    });
   }
 
 }

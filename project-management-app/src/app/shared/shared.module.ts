@@ -12,4 +12,4 @@ import { AuthService } from './services/auth.service';
   imports: [CommonModule, HttpClientModule],
   providers: [AuthService, BoardService, CardService, TaskService],
 })
-export class SharedModule {}
+export class SharedModule { }

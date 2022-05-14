@@ -1,21 +1,17 @@
-input {
-  &.ng-invalid.ng-touched {
-    border: 1px solid rgb(177, 5, 5);
-  }
-
-  &.ng-valid.ng-touched {
-    border: 1px solid rgb(6, 99, 6);
-  }
-
-  &.redBorder.ng-valid.ng-touched {
-    border: 1px solid rgb(177, 5, 5);
-  }
+.registration{
+  width: 320px;
+  background: #b0bec5;
+  padding: 5px;
 }
 
-.valid {
-  color: rgb(177, 5, 5);
-  font-size: 0.8em;
-}
+
+.form-field{
+  margin-bottom: 7px;
+  width: 100%;
+  }
+
+
+
 
 .alert-sucsess{
   color:rgb(6, 99, 6);
@@ -25,26 +21,21 @@ input {
    color: rgb(177, 5, 5);
 }
 
-.form-control{
-  margin-bottom: 7px;
-  height: 3em;
-  width: 340px;
-}
-.input-block{
-  display: flex;
-  justify-content: space-between;
- 
-}
-
 .msg-block{
   height: 2.5em;
-  display: flex;
-  align-items: center;
+  text-align: center;  
+  padding: 10px 5px;
 }
+
 .notFound{
   color: rgb(177, 5, 5);
 }
+
+.btn-block{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  }
 .btn{
   margin: 0 auto;
   display: block;
-}
+ }
