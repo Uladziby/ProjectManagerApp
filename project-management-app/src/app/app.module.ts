@@ -17,8 +17,9 @@ import { TOKEN_INTERCEPTOR } from './shared/services/token.interceptor';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    AuthModule
   ],
   providers: [TOKEN_INTERCEPTOR],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

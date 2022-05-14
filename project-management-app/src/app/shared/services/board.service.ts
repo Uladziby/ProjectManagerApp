@@ -26,9 +26,9 @@ export class BoardService {
     return this.http.get<IBoard>(req);
   }
 
-  createBoard(title: string) {
+  createBoard(title: string, description: string) {
     const req = `${BASIC_URL}/boards`;
-    const body: IBoardCreation = { title: title };
+    const body: IBoardCreation = { title: title, description: description };
     return this.http.post<IBoards>(req, body);
   }
 
@@ -43,9 +43,13 @@ export class BoardService {
   //   return this.http.delete(req).subscribe(() => {});
   // }
 
-  changeBoard(id: string, title: string): Observable<IBoards> {
+  changeBoard(
+    id: string,
+    title: string,
+    description: string
+  ): Observable<IBoards> {
     const req = `${BASIC_URL}/users${id}`;
-    const body: IBoardCreation = { title: title };
+    const body: IBoardCreation = { title: title, description: description };
     return this.http.put<IBoards>(req, body);
   }
 }

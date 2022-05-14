@@ -24,18 +24,21 @@ export interface IUserToken {
 //getting boards list
 export interface IBoards {
   id: string;
+  description: string;
   title: string;
 }
 
 //set new board
 export interface IBoardCreation {
   title: string;
+  description: string;
 }
 
 //for getting board by id
 export interface IBoard {
   id: string;
   title: string;
+  description: string;
   columns: IColumn[];
 }
 
@@ -80,15 +83,16 @@ export interface ITask {
   userId: string;
   boardId: string;
   columnId: string;
+  done: boolean;
 }
 
 //for task creation
 export interface ITaskCreate {
   title: string;
-  done: false;
   order: number;
   description: string;
   userId: string;
+  done: boolean;
 }
 
 //for task update
@@ -99,4 +103,5 @@ export interface ITaskNewInfo {
   userId: string;
   boardId: string;
   columnId: string;
+  done: boolean;
 }
