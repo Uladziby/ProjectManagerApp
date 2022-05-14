@@ -19,7 +19,12 @@ export class BoardComponent implements OnInit {
     public matDialog: MatDialog
   ) {}
   private subs!: Subscription;
-  board$ = new BehaviorSubject<IBoard>({ id: '', title: '', columns: [] });
+  board$ = new BehaviorSubject<IBoard>({
+    id: '',
+    title: '',
+    columns: [],
+    description: '',
+  });
 
   ngOnInit(): void {
     this.subs = this.boardService.getBoard(this.id).subscribe((items) => {
@@ -39,7 +44,9 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  openApproveModal() {
+  openApproveModal(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-approve-component';

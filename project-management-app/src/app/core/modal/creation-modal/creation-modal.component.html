@@ -1,11 +1,15 @@
 <div mat-dialog-content>
   <p>{{data.task}}</p>
   <mat-form-field>
-    <p *ngIf="!data.title">Поле не должно быть пустым</p>
+    <p *ngIf="!data.title" class="empty">{{modalText.empty}}</p>
     <input matInput [(ngModel)]="data.title">
+  </mat-form-field>
+  <mat-form-field>
+    <p *ngIf="!data.description" class="empty">{{modalText.empty}}</p>
+    <input matInput [(ngModel)]="data.description" maxlength="50">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="closeModal()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.title" cdkFocusInitial disabled="{{!data.title}}">Ok</button>
+  <button mat-button (click)="closeModal()">{{modalText.cancel}}</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial disabled="{{!(data.title && data.description)}}">{{modalText.ok}}</button>
 </div>

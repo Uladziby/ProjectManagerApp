@@ -9,7 +9,7 @@ import { IColumn, IColumnCreation, IColumns } from '../interfaces/interfaces';
 export class CardService {
   constructor(private http: HttpClient) {}
 
-  getCards(boardId: string): Observable<IColumns[]> {
+  getColumns(boardId: string): Observable<IColumns[]> {
     const req = `${BASIC_URL}/boards/${boardId}/columns`;
     return this.http.get<IColumns[]>(req).pipe(
       catchError(() => {
@@ -18,22 +18,22 @@ export class CardService {
     );
   }
 
-  getCard(boardId: string, columnId: string): Observable<IColumn> {
+  getColumn(boardId: string, columnId: string): Observable<IColumn> {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}`;
     return this.http.get<IColumn>(req);
   }
 
-  createCard(boardId: string, body: IColumnCreation) {
+  createColumn(boardId: string, body: IColumnCreation) {
     const req = `${BASIC_URL}/boards/${boardId}/columns`;
     return this.http.post<IColumns>(req, body);
   }
 
-  deleteBoard(boardId: string, columnId: string) {
+  deleteColumn(boardId: string, columnId: string) {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}`;
     return this.http.delete(req);
   }
 
-  changeBoard(
+  changeColumn(
     boardId: string,
     columnId: string,
     body: IColumnCreation
