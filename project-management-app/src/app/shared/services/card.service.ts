@@ -29,8 +29,9 @@ export class CardService {
     return this.http.post<IColumn>(req, body);
   }
 
-  deleteBoard(boardId: string, columnId: string) {
+  deleteColumn(boardId: string, columnId: string) {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}`;
+    console.log(req)
     return this.http.delete(req);
   }
 

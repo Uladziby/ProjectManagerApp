@@ -66,9 +66,18 @@
             </mat-menu>
           </li>
           <mat-grid-tile-footer>
-            <button mat-button (click)="OnCreateTask(column.id)">
+            <button
+              mat-button
+              (click)="
+                OnCreateTask(column.id, (column.tasks===undefined)?0:column.tasks.length)
+              "
+            >
               <mat-icon>add</mat-icon>
               <span>create task</span>
+            </button>
+            <button mat-button (click)="OnRemoveColumn(column.id)">
+              <mat-icon>remove</mat-icon>
+              <span>remove column</span>
             </button>
           </mat-grid-tile-footer>
         </div>

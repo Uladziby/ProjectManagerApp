@@ -24,22 +24,20 @@ import { RouteEnum } from 'src/app/shared/interfaces/enums';
 export class BoardRouteComponent implements OnInit {
   public columns$!: IColumn[];
   public currentIdBoard!: string;
-  public connectedTo: string[]=[];
+  public connectedTo: string[] = [];
 
   constructor(
     private boardService: BoardService,
     private cardService: CardService,
     private taskService: TaskService,
     private router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.currentIdBoard = '780e9390-43cc-4035-9f3e-caf60b5225ec';
     this.boardService.getBoard(this.currentIdBoard).subscribe((val) => {
       this.columns$ = val.columns;
-       console.log(val);
-       for (let item of this.columns$) {
+      for (let item of this.columns$) {
         this.connectedTo.push(item.id);
       }
     });
@@ -65,14 +63,12 @@ export class BoardRouteComponent implements OnInit {
       );
     }
   }
-  dropColomnList(event: CdkDragDrop<any[]>) {
-    console.log(event);
-  }
 
   onCreateColumn() {
+    console.log(this.columns$.length);
     const body: IColumnCreation = {
-      title: 'Backlog',
-      order: 5,
+      title: 'New Column',
+      order: this.columns$.length + 1,
     };
     this.cardService
       .createColumn(this.currentIdBoard, body)
@@ -84,11 +80,13 @@ export class BoardRouteComponent implements OnInit {
   onBack() {
     this.router.navigate([RouteEnum.boards]);
   }
-  OnCreateTask(columnId: string) {
+
+  OnCreateTask(columnId: string, lengthOfColumn: number) {
+    console.log(lengthOfColumn);
     const newTask: ITaskCreate = {
       title: 'new Issue',
       done: false,
-      order: 9,
+      order: lengthOfColumn + 1,
       description: 'create smth',
       userId: '99ef8b08-ceb4-4fab-9680-93300a2566cb',
     };
@@ -106,4 +104,12 @@ export class BoardRouteComponent implements OnInit {
       });
   }
   OnEditTask() {}
+
+  OnRemoveColumn(columnId: string) {
+    this.cardService
+      .deleteColumn(this.currentIdBoard, columnId)
+      .subscribe(() => {
+        this.ngOnInit();
+      });
+  }
 }
