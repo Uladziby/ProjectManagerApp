@@ -85,6 +85,7 @@ export interface ITask {
 //for task creation
 export interface ITaskCreate {
   title: string;
+  done: false;
   order: number;
   description: string;
   userId: string;
