@@ -1,4 +1,3 @@
-import { BoardModule } from './board/board.module';
 import { RouteEnum } from 'src/app/shared/interfaces/enums';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -28,12 +27,14 @@ const routes: Routes = [
   {
     path: RouteEnum.boards,
     loadChildren: () =>
-      import('./board/board.module').then((m) => m.BoardModule),
+      import('./main/board.module').then((m) => m.BoardModule),
   },
   {
-    path: RouteEnum.board+'/:id',
+    path: RouteEnum.board + '/:id',
     loadChildren: () =>
-      import('./board-route/board-route.module').then((m) => m.BoardRouteModule),
+      import('./board-route/board-route.module').then(
+        (m) => m.BoardRouteModule
+      ),
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },

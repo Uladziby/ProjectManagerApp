@@ -85,7 +85,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     dialogConfig.id = 'modal-approve-component';
     dialogConfig.height = '300px';
     dialogConfig.width = '400px';
-    dialogConfig.data = this.modalText;
+    dialogConfig.data = {
+      ...this.modalText,
+      showDescription: true,
+    };
     const modalDialog = this.matDialog.open(
       CreationModalComponent,
       dialogConfig

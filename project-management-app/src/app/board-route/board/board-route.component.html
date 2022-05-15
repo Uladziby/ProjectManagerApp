@@ -1,25 +1,18 @@
 <div class="board-header">
   <a mat-button color="accent" (click)="onBack()">
     <mat-icon>arrow_back_ios_icon</mat-icon>
-    <span>BACK</span>
+    <span>{{boardText.back}}</span>
   </a>
 
   <button mat-button (click)="onCreateColumn()">
     <mat-icon>table_chart_icon</mat-icon>
-    <span>ADD COLUMN</span>
+    <span>{{boardText.add}}</span>
   </button>
 </div>
 
 <div class="columns">
   <div class="example-container" cdkDropListGroup>
-    <div
-      rowHeight="130px"
-      cdkDropList
-      [cdkDropListData]="this.columns$"
-      class="example-list1"
-      cdkDropListOrientation="horizontal"
-      (cdkDropListDropped)="drop($event)"
-    >
+    <div rowHeight="130px" cdkDropList [cdkDropListData]="this.columns$" class="example-list1" cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
       <div cdkDrag *ngFor="let column of this.columns$" class="example-box">
         <div class="column_header">
           <h2>{{ column.title }}</h2>
@@ -32,19 +25,10 @@
             </svg>
           </div>
         </div>
-        <div
-          cdkDropList
-          [cdkDropListData]="column.tasks"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)"
-          id="{{ column.id }}"
-          [cdkDropListConnectedTo]="connectedTo"
-        >
+        <div cdkDropList [cdkDropListData]="column.tasks" class="example-list" (cdkDropListDropped)="drop($event)" id="{{ column.id }}" [cdkDropListConnectedTo]="connectedTo">
           <li class="task" *ngFor="let task of column.tasks" cdkDrag>
             <div class="task_block">
-              <div
-                class="px-3 pb-4 pt-3 uppercase text-textMedium text-13 truncate"
-              >
+              <div class="px-3 pb-4 pt-3 uppercase text-textMedium text-13 truncate">
                 {{ task.title }}
               </div>
               <mat-card-content>
@@ -57,27 +41,24 @@
             <mat-menu #menu="matMenu" id="task_menu">
               <button mat-menu-item (click)="OnDeleteTask(task.id, column.id)">
                 <mat-icon>delete</mat-icon>
-                <span>delete task</span>
+                <span>{{boardText.deleteTask}}</span>
               </button>
-              <button mat-menu-item (click)="OnEditTask()">
+              <button mat-menu-item (click)="OnEditTask(task.order, column.id, task.id)">
                 <mat-icon>edit</mat-icon>
-                <span>edit task</span>
+                <span>{{boardText.editTask}}</span>
               </button>
             </mat-menu>
           </li>
           <mat-grid-tile-footer>
-            <button
-              mat-button
-              (click)="
+            <button mat-button (click)="
                 OnCreateTask(column.id, (column.tasks===undefined)?0:column.tasks.length)
-              "
-            >
+              ">
               <mat-icon>add</mat-icon>
-              <span>create task</span>
+              <span>{{boardText.createTask}}</span>
             </button>
             <button mat-button (click)="OnRemoveColumn(column.id)">
               <mat-icon>remove</mat-icon>
-              <span>remove column</span>
+              <span>{{boardText.removeCol}}</span>
             </button>
           </mat-grid-tile-footer>
         </div>
