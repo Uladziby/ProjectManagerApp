@@ -4,6 +4,7 @@ import { TRANSLATE } from 'src/app/shared/consts/translate';
 import { IBoards } from 'src/app/shared/interfaces/interfaces';
 import { BoardService } from 'src/app/shared/services/board.service';
 import { LangService } from 'src/app/shared/services/lang.service';
+import { StateService } from 'src/app/shared/services/state.service';
 
 @Component({
   selector: 'app-board-list',
@@ -13,8 +14,9 @@ import { LangService } from 'src/app/shared/services/lang.service';
 export class BoardListComponent implements OnInit {
   constructor(
     private boardService: BoardService,
-    private langService: LangService
-  ) {}
+    private langService: LangService,
+    public state: StateService
+  ) { }
   private subs!: Subscription;
   boardList$ = new BehaviorSubject<IBoards[]>([]);
   private subsLang!: Subscription;

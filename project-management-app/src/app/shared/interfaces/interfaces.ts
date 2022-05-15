@@ -55,22 +55,26 @@ export interface IColumnCreation {
   order: number;
 }
 
+
 //getting column by id
 export interface IColumn {
   id: string;
   title: string;
   order: number;
-  tasks: {
-    id: string;
-    title: string;
-    order: number;
-    done: boolean;
-    description: string;
-    userId: string;
-    files: {
-      filename: string;
-      fileSize: number;
-    }[];
+  tasks: ITaskDescr[];
+}
+
+//task interface for column
+export interface ITaskDescr {
+  id: string;
+  title: string;
+  order: number;
+  done: boolean;
+  description: string;
+  userId: string;
+  files: {
+    filename: string;
+    fileSize: number;
   }[];
 }
 
