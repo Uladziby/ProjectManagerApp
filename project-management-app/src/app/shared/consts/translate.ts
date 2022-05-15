@@ -41,12 +41,14 @@ export const TRANSLATE = {
       btnReg: 'Зарегистрировать',
       btnEdit: 'Изменить',
       btnDelete: 'Удалить профиль',
-      name: 'Имя',},
+      name: 'Имя',
+    },
     modal: {
       ok: 'Ок',
       cancel: 'Отмена',
       empty: 'Поле не должно быть пустым',
       action: 'Подтвердите действие на странице',
+      error: 'Что-то пошло не так, попробуйте ещё раз',
     },
     createBoard: {
       task: 'Введите заголовок доски',
@@ -55,6 +57,23 @@ export const TRANSLATE = {
     },
     boards: {
       title: 'Мои доски',
+    },
+    board: {
+      back: 'назад',
+      add: 'новая колонка',
+      createTask: 'новая задача',
+      removeCol: 'удалить колонку',
+      deleteTask: 'удалить задачу',
+      editTask: 'редактировать задачу',
+      modalNewCol: {
+        task: 'Введите заголовок колонки',
+        title: 'Новая колонка',
+      },
+      modalNewTask: {
+        task: 'Введите заголовок задачи',
+        title: 'Новая задача',
+        description: 'Описание задачи',
+      },
     },
   },
   en: {
@@ -99,13 +118,15 @@ export const TRANSLATE = {
       btnReg: 'Create',
       btnEdit: 'Edit',
       btnDelete: 'Delete profile',
-      name: 'Name',},
-      
+      name: 'Name',
+    },
+
     modal: {
       ok: 'Ok',
       cancel: 'Cancel',
       empty: 'This field should not be empty',
       action: 'Confirm action',
+      error: 'Something wrong, please try again',
     },
     createBoard: {
       task: 'Enter a new board title',
@@ -114,6 +135,23 @@ export const TRANSLATE = {
     },
     boards: {
       title: 'My boards',
+    },
+    board: {
+      back: 'back',
+      add: 'add column',
+      createTask: 'create task',
+      removeCol: 'remove column',
+      deleteTask: 'delete task',
+      editTask: 'edit task',
+      modalNewCol: {
+        task: 'Enter new column title',
+        title: 'New Column',
+      },
+      modalNewTask: {
+        task: 'Enter new task title',
+        title: 'New Task',
+        description: 'Description of the task',
+      },
     },
   },
 };

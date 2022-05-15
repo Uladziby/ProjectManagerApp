@@ -4,12 +4,12 @@
     <p *ngIf="!data.title" class="empty">{{modalText.empty}}</p>
     <input matInput [(ngModel)]="data.title">
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field *ngIf="data.showDescription">
     <p *ngIf="!data.description" class="empty">{{modalText.empty}}</p>
     <input matInput [(ngModel)]="data.description" maxlength="50">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="closeModal()">{{modalText.cancel}}</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial disabled="{{!(data.title && data.description)}}">{{modalText.ok}}</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial disabled="{{!(data.title && (data.description || !data.showDescription))}}">{{modalText.ok}}</button>
 </div>
