@@ -12,7 +12,7 @@
 
 <div class="columns">
   <div class="example-container" cdkDropListGroup>
-    <div rowHeight="130px" cdkDropList [cdkDropListData]="this.columns$" class="example-list1" cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+    <div rowHeight="130px" cdkDropList [cdkDropListData]="this.columns$" class="example-list1" cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropColumn($event)">
       <div cdkDrag *ngFor="let column of this.columns$" class="example-box">
         <div class="column_header">
           <h2>{{ column.title }}</h2>

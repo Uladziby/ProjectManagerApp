@@ -1,8 +1,9 @@
-import { Subscription } from 'rxjs';
+import { debounceTime, Subscription } from 'rxjs';
 import { TaskService } from './../../shared/services/task.service';
 import {
   IBoard,
   IColumnCreation,
+  ITask,
   ITaskCreate,
   ITaskNewInfo,
 } from './../../shared/interfaces/interfaces';
@@ -53,7 +54,7 @@ export class BoardRouteComponent implements OnInit {
       (params) => (this.currentIdBoard = params['id'])
     );
     this.boardService.getBoard(this.currentIdBoard).subscribe((val) => {
-      this.columns$ = val.columns;
+      this.columns$ = val.columns.sort((a, b) => a.order - b.order);
       for (let item of this.columns$) {
         this.connectedTo.push(item.id);
       }
@@ -75,6 +76,7 @@ export class BoardRouteComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+      this.updateTaskAfterMove();
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -82,7 +84,42 @@ export class BoardRouteComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+      this.updateTaskAfterTransfer();
     }
+  }
+
+  dropColumn(event: CdkDragDrop<IColumn[]>) {
+    moveItemInArray(
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+    this.updateOrderColumn(event.container.data);
+  }
+
+  updateOrderColumn(arrOfColumns: IColumn[]) {
+    const maxOrder = [...arrOfColumns].reduce(function (a, b) {
+      return Math.max(a, b.order) + 1;
+    }, -Infinity);
+    arrOfColumns.forEach((item, idx) => {
+      this.cardService
+        .changeColumn(this.currentIdBoard, item.id, {
+          title: item.title,
+          order: maxOrder + idx,
+        })
+        .subscribe(() => {
+          if (idx === arrOfColumns.length - 1) {
+            this.ngOnInit();
+          }
+        });
+    });
+  }
+
+  updateTaskAfterMove() {
+    console.log(event, 'moveItem');
+  }
+  updateTaskAfterTransfer() {
+    console.log(event, 'transfer');
   }
 
   onCreateColumn() {
