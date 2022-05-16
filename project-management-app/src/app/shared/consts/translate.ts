@@ -41,7 +41,8 @@ export const TRANSLATE = {
       btnReg: 'Зарегистрировать',
       btnEdit: 'Изменить',
       btnDelete: 'Удалить профиль',
-      name: 'Имя',},
+      name: 'Имя',
+    },
     modal: {
       ok: 'Ок',
       cancel: 'Отмена',
@@ -55,6 +56,14 @@ export const TRANSLATE = {
     },
     boards: {
       title: 'Мои доски',
+    },
+    search: {
+      category: 'Категория',
+      search: 'Поиск',
+      title: 'название',
+      description: 'описание',
+      name: 'имя',
+
     },
   },
   en: {
@@ -99,8 +108,9 @@ export const TRANSLATE = {
       btnReg: 'Create',
       btnEdit: 'Edit',
       btnDelete: 'Delete profile',
-      name: 'Name',},
-      
+      name: 'Name',
+    },
+
     modal: {
       ok: 'Ok',
       cancel: 'Cancel',
@@ -114,6 +124,14 @@ export const TRANSLATE = {
     },
     boards: {
       title: 'My boards',
+    },
+    search: {
+      category: 'Category',
+      search: 'Search',
+      title: 'title',
+      description: 'descripton',
+      name: 'name',
+
     },
   },
 };

@@ -1,24 +1,26 @@
 <div class="wrapper">
     <mat-form-field appearance="fill">
-        <mat-label>Category: </mat-label>
+        <mat-label>{{text.category}}: </mat-label>
         <mat-select [(value)]="searchCategory" (valueChange)="seachTask()">
-            <mat-option [value]="category" *ngFor="let category of searchCategories">{{ category }}</mat-option>
+            <mat-option [value]="category" *ngFor="let category of searchCategories">{{ text[category]}}</mat-option>
         </mat-select>
 
     </mat-form-field>
     <mat-form-field appearance="fill" class="input-field">
-        <mat-label>Value</mat-label>
-        <input matInput type="text" [(ngModel)]="state.search.value" (input)="seachTask()">
+        <mat-label>{{text.search}}</mat-label>
+        <input matInput type="text" [(ngModel)]="state.search.value" (input)="seachTask()" placeholder="text.search">
         <button *ngIf="state.search.value" matSuffix mat-icon-button aria-label="Clear" (click)="state.search.value=''">
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
 </div>
-<div class="resultField" *ngIf="state.search.value">
-    <div *ngFor="let task of state.search.result">
-
-        <div> Title: {{task.title}}</div>
-        <div>Text: {{task.description}}</div>
+<div class="resultField" *ngIf="state.search.value" gdColumns="200px 200px 200px 200px"
+    gdColumns.lg="200px 200px 200px 200px 200px" gdColumns.sm="200px 200px 200px" gdColumns.xs="150px 150px"
+    gdGap="10px 10px">
+    <div *ngFor="let task of state.search.result" class="task">
+        <div class="task_item"><span class="task_item-title">{{text.title}}:</span> {{task.title}}</div>
+        <div class="task_item"><span class="task_item-title">{{text.description}}:</span> {{task.description}}</div>
+        <div class="task_item"><span class="task_item-title">{{text.name}}:</span> {{state.users[task.userId]}}</div>
 
     </div>
 </div>

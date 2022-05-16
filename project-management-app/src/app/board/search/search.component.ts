@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BoardService } from 'src/app/shared/services/board.service';
@@ -7,70 +7,63 @@ import { TaskService } from 'src/app/shared/services/task.service';
 import { tap } from 'rxjs/operators';
 import { IBoard, IColumn, ITask, ITaskDescr } from 'src/app/shared/interfaces/interfaces';
 import { AuthService } from 'src/app/shared/services/auth.service';
-
+import { TRANSLATE } from 'src/app/shared/consts/translate';
+import { LangService } from 'src/app/shared/services/lang.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   tasksCache: {
     title: string,
-    text: string,
+    description: string,
     name: string,
     number: number
   }[] = [];
   resultSearch: ITask[] = []
-  searchCategories: string[] = ['title', 'text', 'name'];
-  searchCategory: 'title' | 'text' | 'name' = 'title';
+  searchCategories: ['title', 'description', 'name'] = ['title', 'description', 'name'];
+  searchCategory: 'title' | 'description' | 'name' = 'title';
   searchValue: string = ''
   constructor(public state: StateService,
     private tasksService: TaskService,
     private boardService: BoardService,
-    private auth: AuthService) { }
+    private auth: AuthService,
+    private langService: LangService) { }
+
+  text = TRANSLATE.en.search;
+  private subs!: Subscription;
 
   ngOnInit(): void {
+    this.state.users = {};
     const newBoards: IBoard[] = [];
-    this.boardService.getBoards().pipe(
-      tap((boards) => {
-        this.state.tasks = [];
-        boards.forEach((board) => {
-          this.boardService.getBoard(board.id).pipe(
-            tap((item) => {
-              newBoards.push(item)
-              this.saveTasks(item.columns)
-            })
-          ).subscribe();
-        })
-        this.state.boards = newBoards;
-      })
-    ).subscribe();
+    this.state.tasks = [];
+    this.boardService.getBoards().subscribe((boards) => {
 
+      boards.forEach((board) => {
+        this.boardService.getBoard(board.id).subscribe((item) => {
+          newBoards.push(item)
+          this.saveTasks(item.columns)
+        });
+      })
+      this.state.boards = newBoards;
+    });
+    this.subs = this.langService.lang$.subscribe((lang) => {
+      this.text =
+        lang === 'English' ? TRANSLATE.en.search : TRANSLATE.ru.search;
+    });
   }
-  seachTask() {
-    if (this.tasksCache.length === 0) {
-      this.state.tasks.forEach((el, ind) => {
-        let name = ''
-        this.auth.getUser(el.userId).pipe(
-          tap((user) => {
-            name = user.name;
-            const task = {
-              title: el.title,
-              text: el.description,
-              name: name,
-              number: ind
-            }
-            this.tasksCache.push(task);
 
-          })
-        ).subscribe();
+  ngOnDestroy(): void {
 
-      })
-
+    if (this.subs) {
+      this.subs.unsubscribe();
     }
-    console.log(this.tasksCache);
+  }
 
+  seachTask() {
     this.state.search.result = []
     this.tasksCache.forEach(el => {
       if (el[this.searchCategory].toLowerCase().includes(this.state.search.value.trim().toLowerCase())) {
@@ -80,12 +73,12 @@ export class SearchComponent implements OnInit {
         }
       }
     })
-    console.log(this.state.search.result);
-
-
   }
 
   saveTasks(colums: IColumn[]) {
+
+
+
     let tasks: ITaskDescr[] = [];
 
     if (colums.length > 0) {
@@ -95,7 +88,29 @@ export class SearchComponent implements OnInit {
         }
       })
     }
-    this.state.tasks = [... this.state.tasks, ...tasks]
+    tasks.forEach((el) => {
+
+
+      let name = ''
+      this.auth.getUser(el.userId)
+        .subscribe((user) => {
+          name = user.name;
+          if (!this.state.users[user.id]) {
+            this.state.users[user.id] = name;
+          }
+
+          const task = {
+            title: el.title,
+            description: el.description,
+            name: name,
+            number: this.tasksCache.length
+          }
+
+          this.tasksCache.push(task);
+          this.state.tasks.push(el);
+        });
+
+    })
 
   }
 

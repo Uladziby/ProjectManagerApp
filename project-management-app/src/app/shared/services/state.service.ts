@@ -15,7 +15,7 @@ export class StateService {
     id: '',
     name: 'Guest'
   };
-
+  users: { [key: string]: string } = {}
   search: { value: string, result: ITaskDescr[] | [] } = {
     value: "",
     result: [],
