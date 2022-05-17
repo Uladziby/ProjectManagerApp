@@ -7,7 +7,7 @@ import { ITask, ITaskCreate, ITaskNewInfo } from '../interfaces/interfaces';
 
 @Injectable()
 export class TaskService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getTasks(boardId: string, columnId: string): Observable<ITask[]> {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}/tasks`;
@@ -42,8 +42,8 @@ export class TaskService {
     return this.http.delete(req);
   }
 
-  changeCard(body: ITaskNewInfo): Observable<ITask> {
-    const req = `${BASIC_URL}/boards/${body.boardId}/columns/${body.columnId}`;
+  changeCard(body: ITaskNewInfo, taskId: string): Observable<ITask> {
+    const req = `${BASIC_URL}/boards/${body.boardId}/columns/${body.columnId}/tasks/${taskId}`;
     return this.http.put<ITask>(req, body);
   }
 }

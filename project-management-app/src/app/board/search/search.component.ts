@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit, OnDestroy {
+  form: FormGroup;
   tasksCache: {
     title: string,
     description: string,
@@ -31,7 +32,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     private tasksService: TaskService,
     private boardService: BoardService,
     private auth: AuthService,
-    private langService: LangService) { }
+    private langService: LangService) {
+    this.form = new FormGroup({
+      searchSelect: new FormControl('title', [Validators.required]),
+      searchInput: new FormControl('', [Validators.minLength(3)])
+    })
+
+  }
+
 
   text = TRANSLATE.en.search;
   private subs!: Subscription;
@@ -64,15 +72,21 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   seachTask() {
-    this.state.search.result = []
-    this.tasksCache.forEach(el => {
-      if (el[this.searchCategory].toLowerCase().includes(this.state.search.value.trim().toLowerCase())) {
-        const task: ITaskDescr = this.state.tasks[el.number];
-        if (task) {
-          this.state.search.result[this.state.search.result.length] = task;
+    console.log(this.form.valid);
+    this.state.search.result = [];
+    if (this.form.valid) {
+
+
+
+      this.tasksCache.forEach(el => {
+        if (el[this.searchCategory].toLowerCase().includes(this.state.search.value.trim().toLowerCase())) {
+          const task: ITaskDescr = this.state.tasks[el.number];
+          if (task) {
+            this.state.search.result[this.state.search.result.length] = task;
+          }
         }
-      }
-    })
+      })
+    }
   }
 
   saveTasks(colums: IColumn[]) {

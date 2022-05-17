@@ -1,5 +1,13 @@
 <header (scroll)="onScroll()">
+
+
   <mat-toolbar layout="row" color="accent" [ngClass]="navbarFixed ? 'fixed' : 'nofixed'">
+    <ng-container>
+      <div class="logo" (click)="toBoards()">
+        PM
+      </div>
+    </ng-container>
+
     <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
       {{ this.lang$ | async }}
     </mat-slide-toggle>
@@ -8,7 +16,8 @@
       {{headerText.create}}
     </button>
     <mat-accordion *ngIf="onCheckLogin()">
-      <mat-expansion-panel role="button" color="accent" class="user_menu" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel role="button" color="accent" class="user_menu" (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
           <mat-panel-title color="primary">
             <button mat-mini-fab color="primary">

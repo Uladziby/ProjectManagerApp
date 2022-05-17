@@ -3,7 +3,10 @@ import { TaskService } from './../../shared/services/task.service';
 import {
   IBoard,
   IColumnCreation,
+  ITask,
   ITaskCreate,
+  ITaskDescr,
+  ITaskNewInfo,
 } from './../../shared/interfaces/interfaces';
 import { CardService } from './../../shared/services/card.service';
 import { BoardService } from './../../shared/services/board.service';
@@ -34,7 +37,7 @@ export class BoardRouteComponent implements OnInit {
     private taskService: TaskService,
     private router: Router,
     private activateRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscription = this.activateRoute.params.subscribe(
@@ -108,7 +111,7 @@ export class BoardRouteComponent implements OnInit {
         this.ngOnInit();
       });
   }
-  OnEditTask() {}
+  OnEditTask() { }
 
   OnRemoveColumn(columnId: string) {
     this.cardService
@@ -117,4 +120,22 @@ export class BoardRouteComponent implements OnInit {
         this.ngOnInit();
       });
   }
+  OnChangeTaskState(task: ITaskDescr, column: IColumn) {
+    const updateTask: ITaskNewInfo = {
+      title: task.title,
+      done: !task.done,
+      order: task.order,
+      description: task.description,
+      userId: task.userId,
+      boardId: this.currentIdBoard,
+      columnId: column.id,
+
+
+    }
+    this.taskService.changeCard(updateTask, task.id).subscribe();
+    task.done = !task.done;
+  }
+
+
+
 }

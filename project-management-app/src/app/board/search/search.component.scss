@@ -2,17 +2,27 @@
     background-color: rgb(176, 190, 197);
     padding-top: 1.34375em;
     display: flex;
-    justify-content: space-around;
-    border-radius: 0 0 5px 5px;
+    justify-content:center;
+    border-radius: 5px;
+    margin: 15px 5px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    gap: 10px;
+    padding-left: 10px;
+    padding-right: 10px ;
+    @media( max-width:400px) {
+        flex-wrap: wrap;
+      }
 }
-.input-field{
-    width: 300px;
+.result{
+   color: black;  
 }
 .resultField{
   display: grid;
   grid-template-columns: repeat(4, 200px);
   gap: 10px;
-  color: black;
+ 
   padding: 15px; 
  
 }
@@ -32,4 +42,14 @@
 }
 .task_item-title{
     font-weight:500;
+}
+.select-field{
+    width: 120px;
+}
+.input-field{
+    width: 100%;
+    max-width: 320px;
+}
+.alert{
+    text-align: center;
 }

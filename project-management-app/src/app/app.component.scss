@@ -1,6 +1,12 @@
+
 .content {
   display: flex;
   justify-content: center;
   margin-top: 6%;
-  min-height: 82vh;
+  margin-bottom: 3%;
+  min-height: 72vh;
+   @media( max-width:1000px) {
+    margin-top: calc((1000px - 100%) * 0.07 + 6%);
+    margin-bottom: calc((1000px - 100%) * 0.07 + 3%);
+  }
 }

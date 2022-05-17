@@ -63,7 +63,8 @@ export const TRANSLATE = {
       title: 'название',
       description: 'описание',
       name: 'имя',
-
+      valid: 'Введите более 2 символов',
+      notFound: 'По вашему запросу ничего не найдено, измените критерии поиска',
     },
   },
   en: {
@@ -131,7 +132,8 @@ export const TRANSLATE = {
       title: 'title',
       description: 'descripton',
       name: 'name',
-
+      valid: 'Please enter more than 2 characters',
+      notFound: 'No results were found for your search, please change your search criteria',
     },
   },
 };
