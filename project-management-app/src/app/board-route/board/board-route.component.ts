@@ -13,6 +13,7 @@ import { Component, OnInit } from '@angular/core';
 import { IColumn } from 'src/app/shared/interfaces/interfaces';
 import {
   CdkDragDrop,
+  CdkDropList,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
@@ -24,6 +25,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreationModalComponent } from 'src/app/core/modal/creation-modal/creation-modal.component';
 import { ApproveModalComponent } from 'src/app/core/modal/approve-modal/approve-modal.component';
 import { ModalComponent } from 'src/app/core/modal/modal.component';
+import { calculateMaxOrder, calculateMaxOrderTasks } from './utils';
 
 @Component({
   selector: 'app-board-route',
@@ -70,13 +72,15 @@ export class BoardRouteComponent implements OnInit {
       console.log("this isn't happening today");
       return;
     }
+
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
-      this.updateTaskAfterMove();
+      this.updateOrdersOfTasks(event.container);
+
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -84,7 +88,24 @@ export class BoardRouteComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-      this.updateTaskAfterTransfer();
+
+      const transferedItem: ITask = event.container.data[event.currentIndex];
+      const bodyTask: ITaskNewInfo = {
+        title: transferedItem.title,
+        order: transferedItem.order,
+        description: transferedItem.description,
+        userId: transferedItem.userId,
+        boardId: this.currentIdBoard,
+        columnId: event.container.id,
+        done: false,
+      };
+
+      this.taskService
+        .updateColumnID(bodyTask, transferedItem.id, event.previousContainer.id)
+        .subscribe(() => {
+          this.updateOrdersOfTasks(event.container);
+          this.updateOrdersOfTasks(event.previousContainer);
+        });
     }
   }
 
@@ -94,32 +115,41 @@ export class BoardRouteComponent implements OnInit {
       event.previousIndex,
       event.currentIndex
     );
-    this.updateOrderColumn(event.container.data);
+    this.updateOrderColumn(event);
   }
 
-  updateOrderColumn(arrOfColumns: IColumn[]) {
-    const maxOrder = [...arrOfColumns].reduce(function (a, b) {
-      return Math.max(a, b.order) + 1;
-    }, -Infinity);
-    arrOfColumns.forEach((item, idx) => {
+  updateOrderColumn(event: CdkDragDrop<IColumn[]>) {
+    const arrOfData = event.container.data;
+    const maxOrder = calculateMaxOrder(arrOfData);
+    arrOfData.forEach((item, idx) => {
       this.cardService
         .changeColumn(this.currentIdBoard, item.id, {
           title: item.title,
           order: maxOrder + idx,
         })
         .subscribe(() => {
-          if (idx === arrOfColumns.length - 1) {
+          if (idx === arrOfData.length - 1) {
             this.ngOnInit();
           }
         });
     });
   }
 
-  updateTaskAfterMove() {
-    console.log(event, 'moveItem');
-  }
-  updateTaskAfterTransfer() {
-    console.log(event, 'transfer');
+  updateOrdersOfTasks(container: CdkDropList<ITask[]>) {
+    const arrOfTasks: ITask[] = container.data;
+    const maxOrder = calculateMaxOrderTasks(arrOfTasks);
+    arrOfTasks.forEach((item, idx) => {
+      const bodyTask: ITaskNewInfo = {
+        title: item.title,
+        order: maxOrder + idx,
+        description: item.description,
+        userId: item.userId,
+        boardId: this.currentIdBoard,
+        columnId: container.id,
+        done: false,
+      };
+      this.taskService.changeTask(bodyTask, item.id).subscribe((val) => {});
+    });
   }
 
   onCreateColumn() {

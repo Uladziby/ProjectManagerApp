@@ -46,4 +46,13 @@ export class TaskService {
     const req = `${BASIC_URL}/boards/${body.boardId}/columns/${body.columnId}/tasks/${taskId}`;
     return this.http.put<ITask>(req, body);
   }
+
+  updateColumnID(
+    body: ITaskNewInfo,
+    taskId: string,
+    columnId: string
+  ): Observable<ITask> {
+    const req = `${BASIC_URL}/boards/${body.boardId}/columns/${columnId}/tasks/${taskId}`;
+    return this.http.put<ITask>(req, body);
+  }
 }

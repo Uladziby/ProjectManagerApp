@@ -13,6 +13,9 @@ import { BoardRouteRoutingModule } from './board-routing.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
+import { SharedModule } from '../shared/shared.module';
+import { SortPipe } from './pipes/sort.pipe';
+
 const materialModules = [
   MatToolbarModule,
   MatButtonModule,
@@ -27,7 +30,7 @@ const materialModules = [
 ];
 
 @NgModule({
-  declarations: [BoardRouteComponent],
+  declarations: [BoardRouteComponent, SortPipe],
   imports: [
     CommonModule,
     BoardRouteRoutingModule,

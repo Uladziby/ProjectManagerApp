@@ -13,7 +13,6 @@ import { TOKEN_INTERCEPTOR } from './shared/services/token.interceptor';
   declarations: [AppComponent],
   imports: [
     CoreModule,
-    SharedModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
