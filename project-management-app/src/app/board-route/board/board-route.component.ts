@@ -6,6 +6,7 @@ import {
   ITask,
   ITaskCreate,
   ITaskNewInfo,
+  IUser,
 } from './../../shared/interfaces/interfaces';
 import { CardService } from './../../shared/services/card.service';
 import { BoardService } from './../../shared/services/board.service';
@@ -33,6 +34,7 @@ import { calculateMaxOrder, calculateMaxOrderTasks } from './utils';
   styleUrls: ['./board-route.component.scss'],
 })
 export class BoardRouteComponent implements OnInit {
+  private userID!: IUser;
   public subscription!: Subscription;
   public columns$!: IColumn[];
   public currentIdBoard!: string;
@@ -52,6 +54,7 @@ export class BoardRouteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userID = JSON.parse(localStorage.getItem('userInfo')!);
     this.subscription = this.activateRoute.params.subscribe(
       (params) => (this.currentIdBoard = params['id'])
     );
@@ -80,7 +83,6 @@ export class BoardRouteComponent implements OnInit {
         event.currentIndex
       );
       this.updateOrdersOfTasks(event.container);
-
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -207,7 +209,7 @@ export class BoardRouteComponent implements OnInit {
           done: false,
           order: lengthOfColumn + 1,
           description: result.description,
-          userId: '99ef8b08-ceb4-4fab-9680-93300a2566cb',
+          userId: this.userID.id,
         };
         this.cardService
           .createTask(this.currentIdBoard, columnId, newTask)
@@ -309,5 +311,16 @@ export class BoardRouteComponent implements OnInit {
     dialogConfig.height = '150px';
     dialogConfig.width = '400px';
     const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+  }
+
+  OnChangeTitle(event: Event, column: IColumn) {
+    const val = (event.target as HTMLInputElement).value;
+    if (!val) return;
+    this.cardService
+      .changeColumn(this.currentIdBoard, column.id, {
+        title: val,
+        order: column.order,
+      })
+      .subscribe();
   }
 }
