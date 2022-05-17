@@ -1,3 +1,10 @@
+main {
+  margin: 30px auto;
+  width: 60%;
+  overflow-y: scroll;
+  height: calc(100vh - 188px);
+}
+
 #title-section {
   text-align: center;
 }
@@ -10,6 +17,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
+  margin: auto;
 }
 
 .team-section-card {
@@ -22,4 +30,26 @@
 .team-section-card:nth-child(2n) {
   margin-top: 40px;
   margin-bottom: 0px;
+}
+
+.duty {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  main {
+    margin: 30px auto;
+    width: 60%;
+    overflow-y: scroll;
+    height: unset;
+  }
+
+  #team-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin: auto;
+  }
 }

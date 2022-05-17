@@ -1,14 +1,13 @@
 import { Subscription } from 'rxjs';
 import { TaskService } from './../../shared/services/task.service';
 import {
-  IBoard,
   IColumnCreation,
   ITaskCreate,
   ITaskNewInfo,
 } from './../../shared/interfaces/interfaces';
 import { CardService } from './../../shared/services/card.service';
 import { BoardService } from './../../shared/services/board.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IColumn } from 'src/app/shared/interfaces/interfaces';
 import {
   CdkDragDrop,
@@ -29,7 +28,7 @@ import { ModalComponent } from 'src/app/core/modal/modal.component';
   templateUrl: './board-route.component.html',
   styleUrls: ['./board-route.component.scss'],
 })
-export class BoardRouteComponent implements OnInit {
+export class BoardRouteComponent implements OnInit, OnDestroy {
   public subscription!: Subscription;
   public columns$!: IColumn[];
   public currentIdBoard!: string;
@@ -47,6 +46,11 @@ export class BoardRouteComponent implements OnInit {
     private langService: LangService,
     public matDialog: MatDialog
   ) {}
+
+  ngOnDestroy(): void {
+    this.subsLang.unsubscribe();
+    this.subscription.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.subscription = this.activateRoute.params.subscribe(
@@ -169,14 +173,25 @@ export class BoardRouteComponent implements OnInit {
       if (result) {
         this.taskService
           .deleteTask(this.currentIdBoard, columnId, taskId)
-          .subscribe(() => {
-            this.ngOnInit();
+          .subscribe({
+            next: () => {
+              this.ngOnInit();
+            },
+            error: () => {
+              this.showError();
+            },
           });
       }
     });
   }
 
-  OnEditTask(order: number, columnId: string, taskId: string) {
+  OnEditTask(
+    order: number,
+    columnId: string,
+    taskId: string,
+    title: string,
+    description: string
+  ) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-approve-component';
@@ -184,6 +199,8 @@ export class BoardRouteComponent implements OnInit {
     dialogConfig.width = '400px';
     dialogConfig.data = {
       ...this.boardText.modalNewTask,
+      title: title,
+      description: description,
       showDescription: true,
     };
     const modalDialog = this.matDialog.open(
@@ -226,11 +243,14 @@ export class BoardRouteComponent implements OnInit {
     );
     modalDialog.afterClosed().subscribe((result) => {
       if (result) {
-        this.cardService
-          .deleteColumn(this.currentIdBoard, columnId)
-          .subscribe(() => {
+        this.cardService.deleteColumn(this.currentIdBoard, columnId).subscribe({
+          next: () => {
             this.ngOnInit();
-          });
+          },
+          error: () => {
+            this.showError();
+          },
+        });
       }
     });
   }

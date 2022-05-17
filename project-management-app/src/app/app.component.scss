@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   margin-top: 64px;
-  height: calc(100vh - 128px);
-  overflow-y: hidden;
+  min-height: calc(100vh - 128px);
+  // overflow-y: hidden;
 }
 
 .content::-webkit-scrollbar {

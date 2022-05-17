@@ -4,6 +4,13 @@ export const TRANSLATE = {
       title: 'Добро пожаловать на страницу',
       creators: 'разработана студентами RS School - Angular Q1 2022',
       teamHeader: 'Наша команда',
+      develop: 'Разработчик',
+      lid: 'Тимлид, разработчик',
+      vlad: 'Общая структура проекта, хэдер и футер, страница доски, drag and drop на странице доски',
+      elina:
+        'Сервисы для работы с сервером, страница со списком досок, приветственная страница, модальные окна',
+      sasha:
+        'Страница логина и регистрации, редактирование пользователя, поиск задач, обработка сделанной задачи',
     },
     header: {
       create: 'Создать доску',
@@ -81,6 +88,12 @@ export const TRANSLATE = {
       title: 'Welcome to',
       creators: 'by students of RS School - Angular Q1 2022',
       teamHeader: 'Our team',
+      develop: 'Developer',
+      lid: 'TeamLead, developer',
+      vlad: 'General project structure, header and footer, board page, drag and drop on the board page',
+      elina: 'Server Services, Board List Page, Welcome Page, Modals',
+      sasha:
+        'Login and registration page, edit user, search tasks, process done task',
     },
     header: {
       create: 'Create new board',

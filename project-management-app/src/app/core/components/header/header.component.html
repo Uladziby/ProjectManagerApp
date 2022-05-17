@@ -14,15 +14,17 @@
             <button mat-mini-fab color="primary">
               <mat-icon> person </mat-icon>
             </button>
-            <span class="name_user"> Hello, {{state.user.name}} </span>
+            <span class="name_user"> {{headerText.hello}} {{state.user.name}} </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <button class="btn_menu" mat-flat-button (click)="editProfile()">
+        <div class="panel-body">
+          <button class="btn_menu" mat-flat-button (click)="editProfile()">
           {{headerText.edit}}
         </button>
-        <button class="btn_menu" mat-flat-button (click)="OnLogout()">
+          <button class="btn_menu" mat-flat-button (click)="OnLogout()">
           {{headerText.logout}}
         </button>
+        </div>
       </mat-expansion-panel>
     </mat-accordion>
     <ng-container *ngIf="!onCheckLogin()">
