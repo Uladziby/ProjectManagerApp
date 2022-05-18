@@ -1,0 +1,10 @@
+<app-search class="search"></app-search>
+<div *ngIf="state.search.value.length<3">
+  <h2>{{boardsText.title}}</h2>
+  <div gdColumns="200px 200px 200px 200px" gdColumns.lg="200px 200px 200px 200px 200px" gdColumns.sm="200px 200px 200px"
+    gdColumns.xs="150px 150px" gdGap="10px 10px">
+    <!-- <div fxLayout="row wrap" fxLayoutGap="10px"> -->
+    <app-board *ngFor="let board of boardList$ | async" [id]="board.id" color="accent" [boardList$]="boardList$">
+    </app-board>
+  </div>
+</div>

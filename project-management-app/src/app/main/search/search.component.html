@@ -1,0 +1,35 @@
+<form class="wrapper" [formGroup]="form">
+    <mat-form-field appearance="fill" class="select-field">
+        <mat-label>{{text.category}}: </mat-label>
+        <mat-select [(value)]="searchCategory" (valueChange)="seachTask()" formControlName="searchSelect">
+            <mat-option [value]="category" *ngFor="let category of searchCategories">{{ text[category]}}</mat-option>
+        </mat-select>
+
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="input-field">
+        <mat-label>{{text.search}}</mat-label>
+        <input matInput type="text" [(ngModel)]="state.search.value" (input)="seachTask() "
+            formControlName="searchInput" placeholder="{{text.search}}">
+        <button *ngIf="state.search.value" matSuffix mat-icon-button aria-label="Clear" (click)="state.search.value=''">
+            <mat-icon>close</mat-icon>
+        </button>
+        <mat-error *ngIf="form.invalid">
+            {{text.valid}}
+        </mat-error>
+    </mat-form-field>
+</form>
+<div *ngIf="state.search.value.length>2" class="result">
+    <div class="resultField" gdColumns="200px 200px 200px 200px" gdColumns.lg="200px 200px 200px 200px 200px"
+        gdColumns.sm="200px 200px 200px" gdColumns.xs="150px 150px" gdGap="10px 10px">
+        <div *ngFor="let task of state.search.result" class="task">
+            <div class="task_item"><span class="task_item-title">{{text.title}}:</span> {{task.title}}</div>
+            <div class="task_item"><span class="task_item-title">{{text.description}}:</span> {{task.description}}</div>
+            <div class="task_item"><span class="task_item-title">{{text.name}}:</span> {{state.users[task.userId]}}
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="state.search.result.length===0" class="alert">
+        {{text.notFound}}
+    </div>
+</div>

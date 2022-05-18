@@ -13,8 +13,8 @@ import { BoardRouteRoutingModule } from './board-routing.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
-import { SharedModule } from '../shared/shared.module';
 import { SortPipe } from './pipes/sort.pipe';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const materialModules = [
   MatToolbarModule,
@@ -36,6 +36,7 @@ const materialModules = [
     BoardRouteRoutingModule,
     ...materialModules,
     DragDropModule,
+    ScrollingModule,
   ],
   exports: [BoardRouteComponent],
 })

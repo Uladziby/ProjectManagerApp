@@ -1,5 +1,13 @@
 <header (scroll)="onScroll()">
+
+
   <mat-toolbar layout="row" color="accent" [ngClass]="navbarFixed ? 'fixed' : 'nofixed'">
+    <ng-container>
+      <div class="logo" (click)="toBoards()">
+        PM
+      </div>
+    </ng-container>
+
     <mat-slide-toggle [(ngModel)]="slideToggle" (change)="OnChangeLang()">
       {{ this.lang$ | async }}
     </mat-slide-toggle>
@@ -8,21 +16,24 @@
       {{headerText.create}}
     </button>
     <mat-accordion *ngIf="onCheckLogin()">
-      <mat-expansion-panel role="button" color="accent" class="user_menu" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel role="button" color="accent" class="user_menu" (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
           <mat-panel-title color="primary">
             <button mat-mini-fab color="primary">
               <mat-icon> person </mat-icon>
             </button>
-            <span class="name_user"> Hello, {{state.user.name}} </span>
+            <span class="name_user"> {{headerText.hello}} {{state.user.name}} </span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <button class="btn_menu" mat-flat-button (click)="editProfile()">
+        <div class="panel-body">
+          <button class="btn_menu" mat-flat-button (click)="editProfile()">
           {{headerText.edit}}
         </button>
-        <button class="btn_menu" mat-flat-button (click)="OnLogout()">
+          <button class="btn_menu" mat-flat-button (click)="OnLogout()">
           {{headerText.logout}}
         </button>
+        </div>
       </mat-expansion-panel>
     </mat-accordion>
     <ng-container *ngIf="!onCheckLogin()">

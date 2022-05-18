@@ -7,15 +7,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CoreModule } from '../core/core.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SearchComponent } from './search/search.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [BoardListComponent, BoardComponent],
+  declarations: [BoardListComponent, BoardComponent, SearchComponent],
   imports: [
     CommonModule,
     MatIconModule,
     CoreModule,
     BoardRoutingModule,
     FlexLayoutModule,
+    MatSelectModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [BoardListComponent, BoardComponent],
   providers: [
@@ -26,4 +34,4 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     },
   ],
 })
-export class BoardModule {}
+export class BoardModule { }
