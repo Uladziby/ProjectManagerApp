@@ -79,7 +79,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   OnSignUp(): void {
     this.router.navigate([RouteEnum.signup]);
   }
+  toBoards(): void {
+    if (this.state.search.value.length) {
+      this.state.search.value = "";
+    }
+    this.router.navigate([RouteEnum.boards]);
 
+  }
   newBoard() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;

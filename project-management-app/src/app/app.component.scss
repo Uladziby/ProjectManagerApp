@@ -1,11 +1,12 @@
+
 .content {
   display: flex;
   justify-content: center;
-  margin-top: 64px;
-  min-height: calc(100vh - 128px);
-  // overflow-y: hidden;
-}
-
-.content::-webkit-scrollbar {
-  display: none;
+  margin-top: 6%;
+  margin-bottom: 3%;
+  min-height: 79vh;
+   @media( max-width:1000px) {
+    margin-top: calc((1000px - 100%) * 0.07 + 6%);
+    margin-bottom: calc((1000px - 100%) * 0.07 + 3%);
+  }
 }

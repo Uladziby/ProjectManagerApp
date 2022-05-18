@@ -65,6 +65,15 @@ export const TRANSLATE = {
     boards: {
       title: 'Мои доски',
     },
+    search: {
+      category: 'Категория',
+      search: 'Поиск',
+      title: 'название',
+      description: 'описание',
+      name: 'имя',
+      valid: 'Введите более 2 символов',
+      notFound: 'По вашему запросу ничего не найдено, измените критерии поиска',
+    },
     board: {
       back: 'назад',
       add: 'новая колонка',
@@ -148,6 +157,15 @@ export const TRANSLATE = {
     },
     boards: {
       title: 'My boards',
+    },
+    search: {
+      category: 'Category',
+      search: 'Search',
+      title: 'title',
+      description: 'descripton',
+      name: 'name',
+      valid: 'Please enter more than 2 characters',
+      notFound: 'No results were found for your search, please change your search criteria',
     },
     board: {
       back: 'back',

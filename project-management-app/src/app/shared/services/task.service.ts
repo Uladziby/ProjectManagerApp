@@ -7,7 +7,7 @@ import { ITask, ITaskCreate, ITaskNewInfo } from '../interfaces/interfaces';
 
 @Injectable()
 export class TaskService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getTasks(boardId: string, columnId: string): Observable<ITask[]> {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}/tasks`;

@@ -1,16 +1,26 @@
 import { Injectable } from '@angular/core';
-import { IUser } from '../interfaces/interfaces';
+import { IBoard, ITaskDescr, IUser } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
+
+  userPass: string;
+  tasks: ITaskDescr[] = [];
+  boards: IBoard[] = [];
+
   user: IUser = {
     login: '',
     id: '',
     name: 'Guest'
   };
-  userPass: string;
+  users: { [key: string]: string } = {}
+  search: { value: string, result: ITaskDescr[] | [] } = {
+    value: "",
+    result: [],
+  };
+
 
   constructor() {
     const user = localStorage.getItem('userInfo');
@@ -19,6 +29,7 @@ export class StateService {
     }
     this.userPass = localStorage.getItem('userPass') || '';
   }
+
   updateState(user: IUser, pass: string) {
     this.user = user;
     this.userPass = pass;

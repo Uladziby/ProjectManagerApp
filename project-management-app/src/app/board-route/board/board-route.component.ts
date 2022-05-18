@@ -2,7 +2,9 @@ import { Subscription } from 'rxjs';
 import { TaskService } from './../../shared/services/task.service';
 import {
   IColumnCreation,
+  ITask,
   ITaskCreate,
+  ITaskDescr,
   ITaskNewInfo,
 } from './../../shared/interfaces/interfaces';
 import { CardService } from './../../shared/services/card.service';
@@ -263,4 +265,22 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
     dialogConfig.width = '400px';
     const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
   }
+  OnChangeTaskState(task: ITaskDescr, column: IColumn) {
+    const updateTask: ITaskNewInfo = {
+      title: task.title,
+      done: !task.done,
+      order: task.order,
+      description: task.description,
+      userId: task.userId,
+      boardId: this.currentIdBoard,
+      columnId: column.id,
+
+
+    }
+    this.taskService.changeTask(updateTask, task.id).subscribe();
+    task.done = !task.done;
+  }
+
+
+
 }
