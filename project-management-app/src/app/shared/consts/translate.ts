@@ -4,6 +4,13 @@ export const TRANSLATE = {
       title: 'Добро пожаловать на страницу',
       creators: 'разработана студентами RS School - Angular Q1 2022',
       teamHeader: 'Наша команда',
+      develop: 'Разработчик',
+      lid: 'Тимлид, разработчик',
+      vlad: 'Общая структура проекта, хэдер и футер, страница доски, drag and drop на странице доски',
+      elina:
+        'Сервисы для работы с сервером, страница со списком досок, приветственная страница, модальные окна',
+      sasha:
+        'Страница логина и регистрации, редактирование пользователя, поиск задач, обработка сделанной задачи',
     },
     header: {
       create: 'Создать доску',
@@ -48,6 +55,7 @@ export const TRANSLATE = {
       cancel: 'Отмена',
       empty: 'Поле не должно быть пустым',
       action: 'Подтвердите действие на странице',
+      error: 'Что-то пошло не так, попробуйте ещё раз',
     },
     createBoard: {
       task: 'Введите заголовок доски',
@@ -66,12 +74,35 @@ export const TRANSLATE = {
       valid: 'Введите более 2 символов',
       notFound: 'По вашему запросу ничего не найдено, измените критерии поиска',
     },
+    board: {
+      back: 'назад',
+      add: 'новая колонка',
+      createTask: 'новая задача',
+      removeCol: 'удалить колонку',
+      deleteTask: 'удалить задачу',
+      editTask: 'редактировать задачу',
+      modalNewCol: {
+        task: 'Введите заголовок колонки',
+        title: 'Новая колонка',
+      },
+      modalNewTask: {
+        task: 'Введите заголовок задачи',
+        title: 'Новая задача',
+        description: 'Описание задачи',
+      },
+    },
   },
   en: {
     welcome: {
       title: 'Welcome to',
       creators: 'by students of RS School - Angular Q1 2022',
       teamHeader: 'Our team',
+      develop: 'Developer',
+      lid: 'TeamLead, developer',
+      vlad: 'General project structure, header and footer, board page, drag and drop on the board page',
+      elina: 'Server Services, Board List Page, Welcome Page, Modals',
+      sasha:
+        'Login and registration page, edit user, search tasks, process done task',
     },
     header: {
       create: 'Create new board',
@@ -117,6 +148,7 @@ export const TRANSLATE = {
       cancel: 'Cancel',
       empty: 'This field should not be empty',
       action: 'Confirm action',
+      error: 'Something wrong, please try again',
     },
     createBoard: {
       task: 'Enter a new board title',
@@ -134,6 +166,23 @@ export const TRANSLATE = {
       name: 'name',
       valid: 'Please enter more than 2 characters',
       notFound: 'No results were found for your search, please change your search criteria',
+    },
+    board: {
+      back: 'back',
+      add: 'add column',
+      createTask: 'create task',
+      removeCol: 'remove column',
+      deleteTask: 'delete task',
+      editTask: 'edit task',
+      modalNewCol: {
+        task: 'Enter new column title',
+        title: 'New Column',
+      },
+      modalNewTask: {
+        task: 'Enter new task title',
+        title: 'New Task',
+        description: 'Description of the task',
+      },
     },
   },
 };

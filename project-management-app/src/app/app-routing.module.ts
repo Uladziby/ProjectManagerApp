@@ -1,14 +1,16 @@
-import { BoardModule } from './board/board.module';
 import { RouteEnum } from 'src/app/shared/interfaces/enums';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './core/pages/not-found/not-found.component';
 import { WelcomeComponent } from './core/pages/welcome/welcome.component';
+import { LoginGuard } from './core/guards/login-guard.guard';
+import { BoardListComponent } from './main/board-list/board-list.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'boards', pathMatch: 'full' },
   {
-    path: '',
+    path: 'welcome',
     component: WelcomeComponent,
     canActivate: [AuthGuard],
     canLoad: [AuthGuard],
@@ -28,12 +30,18 @@ const routes: Routes = [
   {
     path: RouteEnum.boards,
     loadChildren: () =>
-      import('./board/board.module').then((m) => m.BoardModule),
+      import('./main/board.module').then((m) => m.BoardModule),
+    canLoad: [LoginGuard],
+    canActivate: [LoginGuard],
+    component: BoardListComponent,
+    pathMatch: 'full',
   },
   {
-    path: RouteEnum.board+'/:id',
+    path: RouteEnum.board + '/:id',
     loadChildren: () =>
-      import('./board-route/board-route.module').then((m) => m.BoardRouteModule),
+      import('./board-route/board-route.module').then(
+        (m) => m.BoardRouteModule
+      ),
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },

@@ -1,12 +1,12 @@
 <div class="board-header">
   <a mat-button color="accent" (click)="onBack()">
     <mat-icon>arrow_back_ios_icon</mat-icon>
-    <span>BACK</span>
+    <span>{{boardText.back}}</span>
   </a>
 
   <button mat-button (click)="onCreateColumn()">
     <mat-icon>table_chart_icon</mat-icon>
-    <span>ADD COLUMN</span>
+    <span>{{boardText.add}}</span>
   </button>
 </div>
 
@@ -25,6 +25,7 @@
               <path d="M0 0h24v24H0z" fill="none"></path>
             </svg>
           </div>
+          <mat-icon class="delete-button" (click)="OnRemoveColumn(column.id)">delete</mat-icon>
         </div>
         <div cdkDropList [cdkDropListData]="column.tasks" class="example-list" (cdkDropListDropped)="drop($event)"
           id="{{ column.id }}" [cdkDropListConnectedTo]="connectedTo">
@@ -45,11 +46,11 @@
             <mat-menu #menu="matMenu" id="task_menu">
               <button mat-menu-item (click)="OnDeleteTask(task.id, column.id)">
                 <mat-icon>delete</mat-icon>
-                <span>delete task</span>
+                <span>{{boardText.deleteTask}}</span>
               </button>
-              <button mat-menu-item (click)="OnEditTask()">
+              <button mat-menu-item (click)="OnEditTask(task.order, column.id, task.id, task.title, task.description)">
                 <mat-icon>edit</mat-icon>
-                <span>edit task</span>
+                <span>{{boardText.editTask}}</span>
               </button>
               <button mat-menu-item *ngIf="!task.done" (click)="OnChangeTaskState(task, column)">
                 <mat-icon>done</mat-icon>
@@ -66,12 +67,12 @@
                 OnCreateTask(column.id, (column.tasks===undefined)?0:column.tasks.length)
               ">
               <mat-icon>add</mat-icon>
-              <span>create task</span>
+              <span>{{boardText.createTask}}</span>
             </button>
-            <button mat-button (click)="OnRemoveColumn(column.id)">
+            <!-- <button mat-button (click)="OnRemoveColumn(column.id)">
               <mat-icon>remove</mat-icon>
-              <span>remove column</span>
-            </button>
+              <span>{{boardText.removeCol}}</span>
+            </button> -->
           </mat-grid-tile-footer>
         </div>
       </div>

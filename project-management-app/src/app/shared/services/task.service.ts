@@ -27,22 +27,22 @@ export class TaskService {
     return this.http.get<ITask>(req);
   }
 
-  createCard(
+  createTask(
     boardId: string,
     columnId: string,
     body: ITaskCreate
   ): Observable<ITask> {
-    console.log(body)
+    console.log(body);
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}/tasks`;
     return this.http.post<ITask>(req, body);
   }
 
-  deleteCard(boardId: string, columnId: string, taskId: string) {
+  deleteTask(boardId: string, columnId: string, taskId: string) {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`;
     return this.http.delete(req);
   }
 
-  changeCard(body: ITaskNewInfo, taskId: string): Observable<ITask> {
+  changeTask(body: ITaskNewInfo, taskId: string): Observable<ITask> {
     const req = `${BASIC_URL}/boards/${body.boardId}/columns/${body.columnId}/tasks/${taskId}`;
     return this.http.put<ITask>(req, body);
   }

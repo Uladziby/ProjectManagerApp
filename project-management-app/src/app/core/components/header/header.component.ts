@@ -8,6 +8,7 @@ import { LangService } from 'src/app/shared/services/lang.service';
 import { TRANSLATE } from 'src/app/shared/consts/translate';
 import { StateService } from 'src/app/shared/services/state.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ModalComponent } from '../../modal/modal.component';
 
 @Component({
   selector: 'app-header',
@@ -91,7 +92,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     dialogConfig.id = 'modal-approve-component';
     dialogConfig.height = '300px';
     dialogConfig.width = '400px';
-    dialogConfig.data = this.modalText;
+    dialogConfig.data = {
+      ...this.modalText,
+      showDescription: true,
+    };
     const modalDialog = this.matDialog.open(
       CreationModalComponent,
       dialogConfig
@@ -101,9 +105,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (result) {
         this.boardService
           .createBoard(result.title, result.description)
-          .subscribe(() => { });
+          .subscribe({
+            next: () => {},
+            error: () => {
+              this.showError();
+            },
+          });
       }
     });
+  }
+
+  showError() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-approve-component';
+    dialogConfig.height = '150px';
+    dialogConfig.width = '400px';
+    const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
   }
 
   @HostListener('document:scroll', ['$event'])
