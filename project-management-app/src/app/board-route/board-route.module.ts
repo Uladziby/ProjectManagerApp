@@ -12,8 +12,10 @@ import { BoardRouteComponent } from './board/board-route.component';
 import { BoardRouteRoutingModule } from './board-routing.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatMenuModule } from '@angular/material/menu';
+import {MatMenuModule} from '@angular/material/menu';
+import { SortPipe } from './pipes/sort.pipe';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+
 const materialModules = [
   MatToolbarModule,
   MatButtonModule,
@@ -28,7 +30,7 @@ const materialModules = [
 ];
 
 @NgModule({
-  declarations: [BoardRouteComponent],
+  declarations: [BoardRouteComponent, SortPipe],
   imports: [
     CommonModule,
     BoardRouteRoutingModule,

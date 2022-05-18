@@ -16,13 +16,12 @@ export class tokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('userToken');
-    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5OWVmOGIwOC1jZWI0LTRmYWItOTY4MC05MzMwMGEyNTY2Y2IiLCJsb2dpbiI6IndsYWQxIiwiaWF0IjoxNjUyNDI4NDkxfQ.vaEjsHrGvrcWUFuiXhp3NFSNco8xweug9I1kBYqr3hU'
+     //const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwNmQyNGNkYi03MTc3LTRlNTYtODc0Ni1kMzk5OWM4OTcyYzUiLCJsb2dpbiI6ImEzNCIsImlhdCI6MTY1MjcxMzExMH0.M-0ljfyL7lm5E5RoyB3jsgqhSt9scI_1Y_1ilajz4oU'
     if (token) {
       req = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${token}`),
       });
     }
-
     return next.handle(req);
   }
 }

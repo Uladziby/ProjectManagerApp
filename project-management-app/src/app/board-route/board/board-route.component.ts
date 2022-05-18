@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { debounceTime, Subscription } from 'rxjs';
 import { TaskService } from './../../shared/services/task.service';
 import {
   IColumnCreation,
@@ -6,6 +6,7 @@ import {
   ITaskCreate,
   ITaskDescr,
   ITaskNewInfo,
+  IUser,
 } from './../../shared/interfaces/interfaces';
 import { CardService } from './../../shared/services/card.service';
 import { BoardService } from './../../shared/services/board.service';
@@ -13,6 +14,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IColumn } from 'src/app/shared/interfaces/interfaces';
 import {
   CdkDragDrop,
+  CdkDropList,
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
@@ -24,13 +26,15 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreationModalComponent } from 'src/app/core/modal/creation-modal/creation-modal.component';
 import { ApproveModalComponent } from 'src/app/core/modal/approve-modal/approve-modal.component';
 import { ModalComponent } from 'src/app/core/modal/modal.component';
+import { calculateMaxOrder, calculateMaxOrderTasks } from './utils';
 
 @Component({
   selector: 'app-board-route',
   templateUrl: './board-route.component.html',
   styleUrls: ['./board-route.component.scss'],
 })
-export class BoardRouteComponent implements OnInit, OnDestroy {
+export class BoardRouteComponent implements OnInit ,OnDestroy {
+  private userID!: IUser;
   public subscription!: Subscription;
   public columns$!: IColumn[];
   public currentIdBoard!: string;
@@ -55,11 +59,12 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.userID = JSON.parse(localStorage.getItem('userInfo')!);
     this.subscription = this.activateRoute.params.subscribe(
       (params) => (this.currentIdBoard = params['id'])
     );
     this.boardService.getBoard(this.currentIdBoard).subscribe((val) => {
-      this.columns$ = val.columns;
+      this.columns$ = val.columns.sort((a, b) => a.order - b.order);
       for (let item of this.columns$) {
         this.connectedTo.push(item.id);
       }
@@ -75,12 +80,14 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
       console.log("this isn't happening today");
       return;
     }
+
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
+      this.updateOrdersOfTasks(event.container);
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -88,7 +95,68 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
         event.previousIndex,
         event.currentIndex
       );
+
+      const transferedItem: ITask = event.container.data[event.currentIndex];
+      const bodyTask: ITaskNewInfo = {
+        title: transferedItem.title,
+        order: transferedItem.order,
+        description: transferedItem.description,
+        userId: transferedItem.userId,
+        boardId: this.currentIdBoard,
+        columnId: event.container.id,
+        done: false,
+      };
+
+      this.taskService
+        .updateColumnID(bodyTask, transferedItem.id, event.previousContainer.id)
+        .subscribe(() => {
+          this.updateOrdersOfTasks(event.container);
+          this.updateOrdersOfTasks(event.previousContainer);
+        });
     }
+  }
+
+  dropColumn(event: CdkDragDrop<IColumn[]>) {
+    moveItemInArray(
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+    this.updateOrderColumn(event);
+  }
+
+  updateOrderColumn(event: CdkDragDrop<IColumn[]>) {
+    const arrOfData = event.container.data;
+    const maxOrder = calculateMaxOrder(arrOfData);
+    arrOfData.forEach((item, idx) => {
+      this.cardService
+        .changeColumn(this.currentIdBoard, item.id, {
+          title: item.title,
+          order: maxOrder + idx,
+        })
+        .subscribe(() => {
+          if (idx === arrOfData.length - 1) {
+            this.ngOnInit();
+          }
+        });
+    });
+  }
+
+  updateOrdersOfTasks(container: CdkDropList<ITask[]>) {
+    const arrOfTasks: ITask[] = container.data;
+    const maxOrder = calculateMaxOrderTasks(arrOfTasks);
+    arrOfTasks.forEach((item, idx) => {
+      const bodyTask: ITaskNewInfo = {
+        title: item.title,
+        order: maxOrder + idx,
+        description: item.description,
+        userId: item.userId,
+        boardId: this.currentIdBoard,
+        columnId: container.id,
+        done: false,
+      };
+      this.taskService.changeTask(bodyTask, item.id).subscribe((val) => {});
+    });
   }
 
   onCreateColumn() {
@@ -146,7 +214,7 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
           done: false,
           order: lengthOfColumn + 1,
           description: result.description,
-          userId: '99ef8b08-ceb4-4fab-9680-93300a2566cb',
+          userId: this.userID.id,
         };
         this.cardService
           .createTask(this.currentIdBoard, columnId, newTask)
@@ -264,6 +332,17 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
     dialogConfig.height = '150px';
     dialogConfig.width = '400px';
     const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+  }
+
+  OnChangeTitle(event: Event, column: IColumn) {
+    const val = (event.target as HTMLInputElement).value;
+    if (!val) return;
+    this.cardService
+      .changeColumn(this.currentIdBoard, column.id, {
+        title: val,
+        order: column.order,
+      })
+      .subscribe();
   }
   OnChangeTaskState(task: ITaskDescr, column: IColumn) {
     const updateTask: ITaskNewInfo = {

@@ -12,11 +12,12 @@
 
 <div class="columns">
   <div class="example-container" cdkDropListGroup>
-    <div rowHeight="130px" cdkDropList [cdkDropListData]="this.columns$" class="example-list1"
-      cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+    <div rowHeight="130px" cdkDropList [cdkDropListData]="this.columns$" class="example-list1" cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropColumn($event)">
       <div cdkDrag *ngFor="let column of this.columns$" class="example-box">
         <div class="column_header">
-          <h2>{{ column.title }}</h2>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <input matInput placeholder="the title of column" value="{{column.title }}" (change)="OnChangeTitle($event,column)">
+          </mat-form-field>
           <div class="example-handle" cdkDragHandle>
             <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -27,12 +28,9 @@
           </div>
           <mat-icon class="delete-button" (click)="OnRemoveColumn(column.id)">delete</mat-icon>
         </div>
-        <div cdkDropList [cdkDropListData]="column.tasks" class="example-list" (cdkDropListDropped)="drop($event)"
-          id="{{ column.id }}" [cdkDropListConnectedTo]="connectedTo">
-          <li class="task" *ngFor="let task of column.tasks" cdkDrag>
-
-            <div class="task_block" [ngClass]={done:task.done}>
-
+        <div cdkDropList [cdkDropListData]="column.tasks " class="example-list" (cdkDropListDropped)="drop($event)" id="{{ column.id }}" [cdkDropListConnectedTo]="connectedTo">
+          <li class="task" *ngFor="let task of column.tasks|sort:'order'" cdkDrag>
+            <div class="task_block"  [ngClass]={done:task.done}>
               <div class="px-3 pb-4 pt-3 uppercase text-textMedium text-13 truncate">
                 <mat-icon *ngIf="task.done" class="done-icon">done</mat-icon> {{ task.title }}
               </div>

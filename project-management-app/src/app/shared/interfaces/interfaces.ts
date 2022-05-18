@@ -89,6 +89,18 @@ export interface ITask {
   columnId: string;
   done: boolean;
 }
+export interface TaskI{
+  id: string;
+    title: string;
+    order: number;
+    done: boolean;
+    description: string;
+    userId: string;
+    files: {
+      filename: string;
+      fileSize: number;
+    }[];
+}
 
 //for task creation
 export interface ITaskCreate {
