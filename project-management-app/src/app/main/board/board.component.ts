@@ -27,8 +27,13 @@ export class BoardComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.subs = this.boardService.getBoard(this.id).subscribe((items) => {
-      this.board$.next(items);
+    this.subs = this.boardService.getBoard(this.id).subscribe({
+      next: (items) => {
+        this.board$.next(items);
+      },
+      error: () => {
+        this.showError();
+      },
     });
   }
   ngOnDestroy(): void {
@@ -39,7 +44,6 @@ export class BoardComponent implements OnInit {
     this.boardService.deleteBoard(this.id).subscribe(() => {
       this.boardService.getBoards().subscribe((items) => {
         this.boardList$.next(items);
-        console.log('board list', this.boardList$);
       });
     });
   }
@@ -56,11 +60,24 @@ export class BoardComponent implements OnInit {
       ApproveModalComponent,
       dialogConfig
     );
-    modalDialog.afterClosed().subscribe((result) => {
-      console.log(result);
-      if (result) {
-        this.delete();
-      }
+    modalDialog.afterClosed().subscribe({
+      next: (result) => {
+        if (result) {
+          this.delete();
+        }
+      },
+      error: () => {
+        this.showError();
+      },
     });
+  }
+
+  showError() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-approve-component';
+    dialogConfig.height = '150px';
+    dialogConfig.width = '400px';
+    const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
   }
 }

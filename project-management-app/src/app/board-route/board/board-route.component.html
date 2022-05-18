@@ -24,6 +24,7 @@
               <path d="M0 0h24v24H0z" fill="none"></path>
             </svg>
           </div>
+          <mat-icon class="delete-button" (click)="OnRemoveColumn(column.id)">delete</mat-icon>
         </div>
         <div cdkDropList [cdkDropListData]="column.tasks" class="example-list" (cdkDropListDropped)="drop($event)" id="{{ column.id }}" [cdkDropListConnectedTo]="connectedTo">
           <li class="task" *ngFor="let task of column.tasks" cdkDrag>
@@ -43,7 +44,7 @@
                 <mat-icon>delete</mat-icon>
                 <span>{{boardText.deleteTask}}</span>
               </button>
-              <button mat-menu-item (click)="OnEditTask(task.order, column.id, task.id)">
+              <button mat-menu-item (click)="OnEditTask(task.order, column.id, task.id, task.title, task.description)">
                 <mat-icon>edit</mat-icon>
                 <span>{{boardText.editTask}}</span>
               </button>
@@ -56,10 +57,10 @@
               <mat-icon>add</mat-icon>
               <span>{{boardText.createTask}}</span>
             </button>
-            <button mat-button (click)="OnRemoveColumn(column.id)">
+            <!-- <button mat-button (click)="OnRemoveColumn(column.id)">
               <mat-icon>remove</mat-icon>
               <span>{{boardText.removeCol}}</span>
-            </button>
+            </button> -->
           </mat-grid-tile-footer>
         </div>
       </div>
