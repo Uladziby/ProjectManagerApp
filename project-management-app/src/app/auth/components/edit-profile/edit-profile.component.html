@@ -1,7 +1,11 @@
 <form class="registration" [formGroup]="form" (ngSubmit)="updateUser()">
-    <h2 class="title">
-        {{text.titleEdit}}
-    </h2>
+    <div class="titlte_block">
+        <h2 class="title">
+            {{text.titleEdit}}
+        </h2>
+
+        <mat-icon class="closeBtn" (click)="closeForm()">close</mat-icon>
+    </div>
 
     <mat-form-field class="form-field" appearance="fill">
         <mat-label>{{text.login}} </mat-label>

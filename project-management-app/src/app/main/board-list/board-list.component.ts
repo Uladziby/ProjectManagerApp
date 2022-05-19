@@ -25,8 +25,9 @@ export class BoardListComponent implements OnInit {
 
   ngOnInit(): void {
     this.subs = this.boardService.getBoards().subscribe((items) => {
-      this.boardList$.next(items);
-      console.log('board list', this.boardList$);
+      this.state.boardsList = [];
+      this.state.boardsList = items;
+      this.boardList$.next(this.state.boardsList);
     });
     this.subsLang = this.langService.lang$.subscribe((lang) => {
       this.boardsText =

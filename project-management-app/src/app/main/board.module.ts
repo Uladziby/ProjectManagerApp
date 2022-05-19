@@ -25,7 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  exports: [BoardListComponent, BoardComponent],
+  exports: [BoardListComponent, BoardComponent, SearchComponent],
   providers: [
     MatDialog,
     {

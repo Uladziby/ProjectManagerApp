@@ -1,15 +1,14 @@
 <form class="wrapper" [formGroup]="form">
     <mat-form-field appearance="fill" class="select-field">
         <mat-label>{{text.category}}: </mat-label>
-        <mat-select [(value)]="searchCategory" (valueChange)="seachTask()" formControlName="searchSelect">
+        <mat-select (selectionChange)="seachTask()" formControlName="searchSelect">
             <mat-option [value]="category" *ngFor="let category of searchCategories">{{ text[category]}}</mat-option>
         </mat-select>
 
     </mat-form-field>
     <mat-form-field appearance="fill" class="input-field">
         <mat-label>{{text.search}}</mat-label>
-        <input matInput type="text" [(ngModel)]="state.search.value" (input)="seachTask() "
-            formControlName="searchInput" placeholder="{{text.search}}">
+        <input matInput type="text" (input)="seachTask() " formControlName="searchInput" placeholder="{{text.search}}">
         <button *ngIf="state.search.value" matSuffix mat-icon-button aria-label="Clear" (click)="state.search.value=''">
             <mat-icon>close</mat-icon>
         </button>

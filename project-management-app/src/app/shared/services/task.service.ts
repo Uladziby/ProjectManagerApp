@@ -32,7 +32,6 @@ export class TaskService {
     columnId: string,
     body: ITaskCreate
   ): Observable<ITask> {
-    console.log(body);
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}/tasks`;
     return this.http.post<ITask>(req, body);
   }

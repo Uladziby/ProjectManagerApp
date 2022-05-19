@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private langService: LangService,
     public state: StateService,
-    public auth: AuthService
+    public auth: AuthService,
   ) {
     localStorage.setItem('user', 'yes');
   }
@@ -101,12 +101,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       dialogConfig
     );
     modalDialog.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.boardService
           .createBoard(result.title, result.description)
           .subscribe({
-            next: () => {},
+            next: (board) => {
+              this.state.boardsList.push(board);
+            },
             error: () => {
               this.showError();
             },

@@ -1,4 +1,4 @@
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 export interface Login {
@@ -34,7 +34,6 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.href = this.router.url;
-    console.log(this.router.url);
   }
 
 }

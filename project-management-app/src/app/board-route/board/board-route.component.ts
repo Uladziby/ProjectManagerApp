@@ -33,7 +33,7 @@ import { calculateMaxOrder, calculateMaxOrderTasks } from './utils';
   templateUrl: './board-route.component.html',
   styleUrls: ['./board-route.component.scss'],
 })
-export class BoardRouteComponent implements OnInit ,OnDestroy {
+export class BoardRouteComponent implements OnInit, OnDestroy {
   private userID!: IUser;
   public subscription!: Subscription;
   public columns$!: IColumn[];
@@ -51,7 +51,7 @@ export class BoardRouteComponent implements OnInit ,OnDestroy {
     private activateRoute: ActivatedRoute,
     private langService: LangService,
     public matDialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.subsLang.unsubscribe();
@@ -77,7 +77,6 @@ export class BoardRouteComponent implements OnInit ,OnDestroy {
 
   drop(event: CdkDragDrop<any[]>) {
     if (event.item.data === 'Try to move me') {
-      console.log("this isn't happening today");
       return;
     }
 
@@ -155,11 +154,13 @@ export class BoardRouteComponent implements OnInit ,OnDestroy {
         columnId: container.id,
         done: false,
       };
-      this.taskService.changeTask(bodyTask, item.id).subscribe((val) => {});
+      this.taskService.changeTask(bodyTask, item.id).subscribe((val) => { });
     });
   }
 
   onCreateColumn() {
+
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-approve-component';
@@ -174,12 +175,13 @@ export class BoardRouteComponent implements OnInit ,OnDestroy {
       if (result) {
         const body: IColumnCreation = {
           title: result.title,
-          order: this.columns$.length + 1,
+          order: this.getOrder(this.columns$),
         };
-        console.log(body, this.currentIdBoard);
         this.cardService.createColumn(this.currentIdBoard, body).subscribe({
           next: (val) => {
-            this.columns$.push(val), console.log(val);
+            const newColumn = val;
+            newColumn.tasks = [];
+            this.columns$.push(newColumn);
           },
           error: () => {
             this.showError();
@@ -193,7 +195,9 @@ export class BoardRouteComponent implements OnInit ,OnDestroy {
     this.router.navigate([RouteEnum.boards]);
   }
 
-  OnCreateTask(columnId: string, lengthOfColumn: number) {
+  OnCreateTask(column: IColumn) {
+    console.log(this.columns$);
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-approve-component';
@@ -212,12 +216,12 @@ export class BoardRouteComponent implements OnInit ,OnDestroy {
         const newTask: ITaskCreate = {
           title: result.title,
           done: false,
-          order: lengthOfColumn + 1,
+          order: this.getOrder(column.tasks),
           description: result.description,
           userId: this.userID.id,
         };
         this.cardService
-          .createTask(this.currentIdBoard, columnId, newTask)
+          .createTask(this.currentIdBoard, column.id, newTask)
           .subscribe({
             next: () => {
               this.ngOnInit();
@@ -360,6 +364,16 @@ export class BoardRouteComponent implements OnInit ,OnDestroy {
     task.done = !task.done;
   }
 
+  getOrder(arr: IColumn[] | ITaskDescr[]) {
+    let order = 0;
+    if (arr.length !== 0) {
+      arr.forEach(col => {
+        order = Math.max(order, col.order);
+      })
+      order += 1;
+    }
+    return order;
+  }
 
 
 }

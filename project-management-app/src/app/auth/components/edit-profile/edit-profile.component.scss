@@ -9,8 +9,18 @@
   margin-bottom: 7px;
   width: 100%;
   }
-
-
+.titlte_block{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.title{
+  flex-grow: 1;
+  text-align: center;
+}
+.closeBtn{
+  cursor: pointer;
+}
 
 
 .alert-sucsess{

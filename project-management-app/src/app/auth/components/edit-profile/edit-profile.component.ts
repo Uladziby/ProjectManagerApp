@@ -8,6 +8,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ApproveModalComponent } from 'src/app/core/modal/approve-modal/approve-modal.component';
 import { TRANSLATE } from 'src/app/shared/consts/translate';
 import { LangService } from 'src/app/shared/services/lang.service';
+import { RouteEnum } from 'src/app/shared/interfaces/enums';
 
 @Component({
   selector: 'app-edit-profile',
@@ -155,5 +156,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  closeForm() {
+    this.router.navigate([RouteEnum.start]);
+  }
 }

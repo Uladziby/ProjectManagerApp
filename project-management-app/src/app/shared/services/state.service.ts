@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IBoard, ITaskDescr, IUser } from '../interfaces/interfaces';
+import { IBoard, IBoards, ITaskDescr, IUser } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class StateService {
   userPass: string;
   tasks: ITaskDescr[] = [];
   boards: IBoard[] = [];
-
+  boardsList: IBoards[] = [];
   user: IUser = {
     login: '',
     id: '',

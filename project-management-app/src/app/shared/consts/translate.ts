@@ -81,6 +81,8 @@ export const TRANSLATE = {
       removeCol: 'удалить колонку',
       deleteTask: 'удалить задачу',
       editTask: 'редактировать задачу',
+      done: 'завершить задачу',
+      unDone: 'вернуть в работу',
       modalNewCol: {
         task: 'Введите заголовок колонки',
         title: 'Новая колонка',
@@ -174,6 +176,8 @@ export const TRANSLATE = {
       removeCol: 'remove column',
       deleteTask: 'delete task',
       editTask: 'edit task',
+      done: 'done task',
+      unDone: 'undo done',
       modalNewCol: {
         task: 'Enter new column title',
         title: 'New Column',

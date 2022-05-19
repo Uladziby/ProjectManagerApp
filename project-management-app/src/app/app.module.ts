@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { TOKEN_INTERCEPTOR } from './shared/services/token.interceptor';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +17,9 @@ import { TOKEN_INTERCEPTOR } from './shared/services/token.interceptor';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthModule
+    AuthModule,
+    MatAutocompleteModule,
+    MatSelectModule
   ],
   providers: [TOKEN_INTERCEPTOR],
   bootstrap: [AppComponent],

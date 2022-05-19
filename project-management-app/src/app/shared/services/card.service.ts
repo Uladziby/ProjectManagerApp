@@ -8,7 +8,7 @@ import { IColumn, IColumnCreation, IColumns, ITask } from '../interfaces/interfa
 
 @Injectable()
 export class CardService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getColumns(boardId: string): Observable<IColumns[]> {
     const req = `${BASIC_URL}/boards/${boardId}/columns`;
@@ -31,7 +31,6 @@ export class CardService {
 
   deleteColumn(boardId: string, columnId: string) {
     const req = `${BASIC_URL}/boards/${boardId}/columns/${columnId}`;
-    console.log(req)
     return this.http.delete(req);
   }
 

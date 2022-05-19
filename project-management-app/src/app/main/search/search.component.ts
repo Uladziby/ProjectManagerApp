@@ -26,7 +26,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }[] = [];
   resultSearch: ITask[] = []
   searchCategories: ['title', 'description', 'name'] = ['title', 'description', 'name'];
-  searchCategory: 'title' | 'description' | 'name' = 'title';
+  searchCategory: 'title' | 'description' | 'name';
   searchValue: string = ''
   constructor(public state: StateService,
     private tasksService: TaskService,
@@ -37,6 +37,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       searchSelect: new FormControl('title', [Validators.required]),
       searchInput: new FormControl('', [Validators.minLength(3)])
     })
+    this.searchCategory = this.form.value.searchSelect;
 
   }
 
@@ -72,7 +73,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   seachTask() {
-    console.log(this.form.valid);
+    this.state.search.value = this.form.value.searchInput;
+
+    this.searchCategory = this.form.value.searchSelect;
     this.state.search.result = [];
     if (this.form.valid) {
 
