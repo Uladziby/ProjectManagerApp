@@ -8,7 +8,6 @@ import { LoginGuard } from './core/guards/login-guard.guard';
 import { BoardListComponent } from './main/board-list/board-list.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'boards', pathMatch: 'full' },
   {
     path: 'welcome',
     component: WelcomeComponent,
@@ -43,6 +42,7 @@ const routes: Routes = [
         (m) => m.BoardRouteModule
       ),
   },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },
 ];

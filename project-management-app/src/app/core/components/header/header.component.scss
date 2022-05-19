@@ -8,15 +8,16 @@ header {
   top: 0;
   z-index: 1000;
   box-shadow: rgba(255, 255, 255, 0.3);
+  height: 0.3vh;
 }
-.logo{
-  border: 3px solid #c2185b;;
+.logo {
+  border: 3px solid #c2185b;
   border-radius: 100%;
   cursor: pointer;
   height: 50px;
   width: 50px;
   line-height: 50px;
-  font-weight:bolder;
+  font-weight: bolder;
   text-align: center;
   color: #c2185b;
 }
@@ -68,5 +69,11 @@ header {
   .panel-body {
     display: flex !important;
     flex-direction: column !important;
+  }
+  .logo {
+    display: none;
+  }
+  #create-text {
+    display: none;
   }
 }

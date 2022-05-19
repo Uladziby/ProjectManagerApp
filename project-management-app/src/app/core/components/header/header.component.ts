@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private langService: LangService,
     public state: StateService,
-    public auth: AuthService,
+    public auth: AuthService
   ) {
     localStorage.setItem('user', 'yes');
   }
@@ -81,10 +81,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   toBoards(): void {
     if (this.state.search.value.length) {
-      this.state.search.value = "";
+      this.state.search.value = '';
     }
     this.router.navigate([RouteEnum.boards]);
-
   }
   newBoard() {
     const dialogConfig = new MatDialogConfig();

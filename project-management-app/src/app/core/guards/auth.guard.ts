@@ -41,7 +41,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     if (!localStorage.getItem('userToken')) {
       return true;
     }
-    this.router.navigate(['boards']);
+    this.router.navigate(['main']);
     return false;
   }
 }

@@ -11,13 +11,14 @@
   position: absolute;
   right: 10px;
   top: 10px;
-  display: none;
+  opacity: 0;
   color: #c2185b;
   cursor: pointer;
+  transition: all 0.2s linear;
 }
 
 .board:hover .delete-button {
-  display: inherit;
+  opacity: 1;
 }
 
 a {
