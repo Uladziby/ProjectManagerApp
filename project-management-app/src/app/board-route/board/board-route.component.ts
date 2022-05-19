@@ -51,7 +51,7 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
     private activateRoute: ActivatedRoute,
     private langService: LangService,
     public matDialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnDestroy(): void {
     this.subsLang.unsubscribe();
@@ -154,13 +154,11 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
         columnId: container.id,
         done: false,
       };
-      this.taskService.changeTask(bodyTask, item.id).subscribe((val) => { });
+      this.taskService.changeTask(bodyTask, item.id).subscribe((val) => {});
     });
   }
 
   onCreateColumn() {
-
-
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-approve-component';
@@ -196,8 +194,6 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
   }
 
   OnCreateTask(column: IColumn) {
-    console.log(this.columns$);
-
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.id = 'modal-approve-component';
@@ -357,9 +353,7 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
       userId: task.userId,
       boardId: this.currentIdBoard,
       columnId: column.id,
-
-
-    }
+    };
     this.taskService.changeTask(updateTask, task.id).subscribe();
     task.done = !task.done;
   }
@@ -367,13 +361,11 @@ export class BoardRouteComponent implements OnInit, OnDestroy {
   getOrder(arr: IColumn[] | ITaskDescr[]) {
     let order = 0;
     if (arr.length !== 0) {
-      arr.forEach(col => {
+      arr.forEach((col) => {
         order = Math.max(order, col.order);
-      })
+      });
       order += 1;
     }
     return order;
   }
-
-
 }
