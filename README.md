@@ -3,9 +3,9 @@
 Система управления проектами – приложение помогающее достичь поставленные задачи отдельному человеку в команде или группе разработчиков.
 
 ## Команда
-Влад Янушевский - https://github.com/Uladziby
-Элина Непомнящая - https://github.com/elina-nep
-Александр Поделинский - https://github.com/alexpodelinskii
+- Влад Янушевский - https://github.com/Uladziby
+- Элина Непомнящая - https://github.com/elina-nep
+- Александр Поделинский - https://github.com/alexpodelinskii
 
 ## Сайт развёрнут по адресу
 https://phenomenal-youtiao-f31f31.netlify.app/
