@@ -1,0 +1,49 @@
+<form class="registration" [formGroup]="form" (ngSubmit)="signin()">
+  <h2 class="title">
+    {{text.title}}
+  </h2>
+
+
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label> {{text.login}}</mat-label>
+    <input type="text" matInput formControlName="login" placeholder={{text.login}}>
+    <mat-error *ngIf="form.get('login')?.touched && form.get('login')?.invalid">
+      {{text.warMsgRequire}}
+    </mat-error>
+
+  </mat-form-field>
+
+
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>{{text.pass}} </mat-label>
+    <input type="password" matInput formControlName="password" placeholder={{text.pass}}>
+    <mat-error *ngIf="form.get('password')?.errors?.['required']">
+      {{text.warMsgRequire}}
+    </mat-error>
+    <mat-error *ngIf="!form.get('password')?.errors?.['required']">
+      {{text.warMsgLen1}}
+      {{form.get('password')?.errors?.['minlength']?.['requiredLength']}}
+      {{text.warMsgLen2}}
+    </mat-error>
+  </mat-form-field>
+
+
+
+  <div class="msg-block" *ngIf=" form.invalid||notFound">
+    <div *ngIf=" form.invalid" class="alert">
+      <span class="alert-text">{{text.msg}}</span>
+    </div>
+
+    <div *ngIf=" !form.invalid&&notFound" class="notFound">
+      {{text.warMsgNotFound}}
+    </div>
+  </div>
+
+  <div class="btn-block" *ngIf=" !(form.invalid||notFound)">
+    <button type="submit" mat-raised-button color="primary" class="btn" [disabled]="form.invalid || form.disabled">
+      {{text.btn}} </button>
+  </div>
+
+
+
+</form>

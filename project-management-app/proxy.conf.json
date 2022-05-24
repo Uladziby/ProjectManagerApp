@@ -1,0 +1,11 @@
+{
+  "/api": {
+      "target": "https://limitless-garden-78985.herokuapp.com",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/api": ""
+      }
+  }
+}

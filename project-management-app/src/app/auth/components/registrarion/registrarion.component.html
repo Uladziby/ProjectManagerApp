@@ -1,0 +1,74 @@
+<form class="registration" [formGroup]="form" (ngSubmit)="regUser()">
+  <h2 class="title">
+    {{text.titleReg}}
+  </h2>
+
+
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label> {{text.login}} </mat-label>
+    <input type="text" matInput formControlName="login" placeholder={{text.login}}>
+    <mat-error *ngIf="form.get('login')?.touched && form.get('login')?.invalid">
+      {{text.warMsgRequire}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="form-field" appearance="fill">
+    <mat-label>{{text.name}}</mat-label>
+    <input type="text" matInput formControlName="name" placeholder={{text.name}}>
+    <mat-error *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      {{text.warMsgRequire}}
+    </mat-error>
+  </mat-form-field>
+
+  <div [formGroup]="pass" class="pass-form">
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label> {{text.pass}} </mat-label>
+      <input type="password" matInput formControlName="password" placeholder={{text.pass}}>
+      <mat-error *ngIf="pass.get('password')?.errors?.['required']">
+        {{text.warMsgRequire}}
+      </mat-error>
+      <mat-error *ngIf="pass.get('password')?.errors?.['minlength']">
+        {{text.warMsgLen1}}
+        {{pass.get('password')?.errors?.['minlength']?.['requiredLength']}}
+        {{text.warMsgLen2}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="fill">
+      <mat-label> {{text.passConf}} </mat-label>
+      <input type="password" matInput formControlName="passwordConfirm" placeholder={{text.passConf}}>
+      <mat-error *ngIf="pass.get('passwordConfirm')?.errors?.['required']">
+        {{text.warMsgRequire}}
+      </mat-error>
+      <mat-error *ngIf="pass.get('passwordConfirm')?.errors?.['minlength']">
+        {{text.warMsgLen1}}
+        {{pass.get('passwordConfirm')?.errors?.['minlength']?.['requiredLength']}}
+        {{text.warMsgLen2}}
+      </mat-error>
+      <mat-error *ngIf="pass.get('passwordConfirm')?.errors?.['custom']">
+        {{text.warMsgNotEqual}}
+      </mat-error>
+    </mat-form-field>
+    <div *ngIf="pass.errors?.['custom']">
+      {{text.warMsgNotEqual}}
+    </div>
+  </div>
+
+  <div *ngIf=" form.invalid" class="msg-block">
+    {{text.msg}}
+  </div>
+  <div *ngIf=" sucsess" class="msg-block alert-sucsess">
+    {{text.msgReg}}
+  </div>
+  <div *ngIf="badReg" class="msg-block alert-badReg">
+    {{text.warMsgRand}}
+  </div>
+  <div *ngIf="wrongLogin" class="msg-block alert-badReg">
+    {{text.warMsgCopy}}
+  </div>
+
+  <div class="btn-block" *ngIf=" !(form.invalid||wrongLogin||badReg)">
+    <button type="submit" mat-raised-button color="primary" class="btn" [disabled]="form.invalid || form.disabled">
+      {{text.btnReg}} </button>
+  </div>
+
+</form>

@@ -1,0 +1,9 @@
+<div id="modal-content-wrapper">
+  <header id="modal-header">
+    <h1 id="modal-title">{{modalText.action}}</h1>
+  </header>
+  <section id="modal-body">
+    <button mat-raised-button id="modal-cancel-button" (click)="closeModal() ">{{modalText.cancel}}</button>
+    <button mat-raised-button id="modal-action-button" (click)="actionFunction()">{{modalText.ok}}</button>
+  </section>
+</div>

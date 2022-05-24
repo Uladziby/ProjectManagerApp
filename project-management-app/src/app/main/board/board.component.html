@@ -1,0 +1,10 @@
+<a [routerLink]="['/board', (board$ | async)?.id]">
+  <div class="board">
+    <h4>{{(board$ | async)?.title}}</h4>
+
+    <p>{{(board$ | async)?.description}}</p>
+    <mat-icon (click)='openApproveModal($event)' class="delete-button">delete</mat-icon>
+
+
+  </div>
+</a>

@@ -1,0 +1,11 @@
+.content {
+  display: flex;
+  justify-content: center;
+  margin-top: 64px;
+  margin-bottom: 3vh;
+  min-height: calc(97vh - 128px);
+  // @media (max-width: 1000px) {
+  //   margin-top: calc((1000px - 100%) * 0.07 + 6vh);
+  //   margin-bottom: calc((1000px - 100%) * 0.07 + 3vh);
+  // }
+}
